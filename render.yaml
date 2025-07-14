@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: myduka-app
+    env: python
+    buildCommand: |
+      cd client && npm install && npm run build
+    startCommand: gunicorn app:app
+    workingDir: server
+    buildFilter:
+      paths:
+        - server/**
+        - client/**
+    envVars:
+      - key: FLASK_ENV
+        value: production
