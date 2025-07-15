@@ -12,4 +12,7 @@ app = Flask(
 
 app.json.sort_keys = True
 app.json.compact = False
-api = Api(app, doc=False)
+api = Api(app,
+          title='MyDuka API',
+          version='1.0',
+          doc='/api')
