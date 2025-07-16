@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# vite config file
+vite.config.js
+
 # Distribution / packaging
 .Python
 build/
