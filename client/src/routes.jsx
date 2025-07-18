@@ -24,6 +24,10 @@ const routes = [
 				path: '/signup',
 				element: <Signup />,
 			},
+            {
+                path: 'signup/:token',
+                element: <Signup />,
+            },
 			{
 				path: '/reset-password',
 				element: <ResetPassword />,
