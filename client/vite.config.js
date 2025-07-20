@@ -19,6 +19,13 @@ import path from 'path';
 export default defineConfig({
 	base: './',
 	plugins: [react()],
+	test: {
+		environment: 'jsdom',
+		globals: true,
+		transformMode: {
+			web: [/\.[jt]sx$/],
+		},
+	},
 	build: {
 		outDir: path.resolve(__dirname, '../server/static'),
 		emptyOutDir: true,
