@@ -2,6 +2,7 @@
 from config import db, bcrypt
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy import func
 
 class Merchant(db.Model, SerializerMixin):
     __tablename__ = 'merchants'
@@ -9,7 +10,7 @@ class Merchant(db.Model, SerializerMixin):
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     
     users = db.relationship('User', back_populates='merchant')
     stores = db.relationship('Store', back_populates='merchant')

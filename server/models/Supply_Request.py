@@ -6,8 +6,8 @@ class Supply_Request(db.Model, SerializerMixin):
     __tablename__ = 'supply_requests'
     
     id = db.Column(db.Integer, primary_key=True)
-    quantity = db.Column(db.Integer, nullable=False)
-    status = db.Column(db.String, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False, default=1)
+    status = db.Column(db.String, nullable=False, default='pending')
     store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
