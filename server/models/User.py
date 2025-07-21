@@ -15,6 +15,7 @@ class User(db.Model, SerializerMixin):
     store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
     merchant_id = db.Column(db.Integer, db.ForeignKey('merchants.id'))
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
+    updated_at = db.Column(db.DateTime, onupdate=func.now())
     
     merchant = db.relationship('Merchant', back_populates='users')
     supply_requests = db.relationship('Supply_Request', back_populates='user')

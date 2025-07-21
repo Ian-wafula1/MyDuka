@@ -1,8 +1,9 @@
 from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
-from app import db
+from sqlalchemy_serializer import SerializerMixin
+from config import db
 
-class Entry(db.Model):
+class Entry(db.Model, SerializerMixin):
     __tablename__ = 'entries'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -13,12 +14,14 @@ class Entry(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
     # Foreign Keys (enforce integrity)
-    store_id = db.Column(db.Integer, db.ForeignKey('stores.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
 
     # Relationships
-    store = db.relationship('Store', backref=db.backref('entries', lazy='dynamic'))
-    product = db.relationship('Product', backref=db.backref('entries', lazy='dynamic'))
+    store = db.relationship('Store', back_populates='entries')
+    product = db.relationship('Product', back_populates='entries')
+    
+    serialize_rules = ('-store', '-product')
 
     def __repr__(self):
         return f'<Entry {self.id} (Product: {self.product_id}, Qty: {self.quantity})>'

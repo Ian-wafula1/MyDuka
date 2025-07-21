@@ -1,8 +1,9 @@
 from datetime import datetime
 from sqlalchemy.ext.hybrid import hybrid_property
-from app import db
+from sqlalchemy_serializer import SerializerMixin
+from config import db
 
-class Store(db.Model):
+class Store(db.Model, SerializerMixin):
     __tablename__ = 'stores'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -14,19 +15,15 @@ class Store(db.Model):
 
     # Foreign Keys
     merchant_id = db.Column(db.Integer, db.ForeignKey('merchants.id'), nullable=False)
-    created_by_user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    assigned_to_user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    # User-friendly fields
-    created_by = db.Column(db.String(100), nullable=False)  # Name of creator
-    assigned_to = db.Column(db.String(100))  # Name of assignee
-
     # Relationships
-    merchant = db.relationship('Merchant', backref='stores')
-    created_by_user = db.relationship('User', foreign_keys=[created_by_user_id], backref='created_stores')
-    assigned_to_user = db.relationship('User', foreign_keys=[assigned_to_user_id], backref='assigned_stores')
-    products = db.relationship('Product', backref='store', lazy=True)
-    supply_requests = db.relationship('SupplyRequest', backref='store', lazy=True)
+    
+    merchant = db.relationship('Merchant', back_populates='stores')
+    products = db.relationship('Product', back_populates='store')
+    supply_requests = db.relationship('Supply_Request', back_populates='store')
+    users = db.relationship('User', back_populates='store')
+    entries = db.relationship('Entry', back_populates='store')
+    
+    serialize_rules = ('-merchant', '-products', '-supply_requests')
 
     # Hybrid property to get merchant's name
     @hybrid_property

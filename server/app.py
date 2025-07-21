@@ -1,6 +1,7 @@
 from flask import send_from_directory
 from config import app, api
 from flask_restx import Resource
+from models import *
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')

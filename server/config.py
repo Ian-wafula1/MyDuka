@@ -9,7 +9,6 @@ from flask_jwt_extended import  JWTManager
 import os
 from dotenv import load_dotenv
 
-
 load_dotenv()
 metadata = MetaData()
 db = SQLAlchemy(metadata=metadata)
@@ -29,13 +28,13 @@ app = Flask(
 )
 
 app.secret_key = os.getenv('SECRET_KEY')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['JWT_SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.json.sort_keys = True
 app.json.compact = False
 
-db.init_app
+db.init_app(app)
 
 jwt = JWTManager(app)
 CORS(app)

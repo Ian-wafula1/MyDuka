@@ -1,8 +1,9 @@
 from datetime import datetime
 from sqlalchemy.ext.hybrid import hybrid_property
-from app import db
+from sqlalchemy_serializer import SerializerMixin
+from config import db
 
-class Product(db.Model):
+class Product(db.Model, SerializerMixin):
     __tablename__ = 'products'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -18,7 +19,13 @@ class Product(db.Model):
     store_id = db.Column(db.Integer, db.ForeignKey('stores.id'), nullable=False)
 
     # Relationships
-    store = db.relationship('Store', backref='products') # Parent store
+    # store = db.relationship('Store', backref='products') # Parent store
+    store = db.relationship('Store', back_populates='products')
+    transactions = db.relationship('Transaction', back_populates='product')
+    supply_requests = db.relationship('Supply_Request', back_populates='product')
+    entries = db.relationship('Entry', back_populates='product')
+    
+    serialize_rules = ('-store', '-transactions', '-supply_requests', '-entries')
 
     # Hybrid property to get the store's name (no database column)
     @hybrid_property
