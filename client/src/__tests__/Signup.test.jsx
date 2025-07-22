@@ -1,11 +1,3 @@
-// Tests
-// 1. Renders merchant form by default
-// 2. Renders admin form when token is provided
-// 3. Validates required fields
-// 4. Submits form and redirects to login
-
-// Signup.test.jsx
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import Signup from '../pages/Signup';
