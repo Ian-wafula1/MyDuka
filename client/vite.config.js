@@ -19,6 +19,13 @@ import path from 'path';
 export default defineConfig({
 	base: './',
 	plugins: [react()],
+	test: {
+		environment: 'jsdom',
+		globals: true,
+		transformMode: {
+			web: [/\.[jt]sx$/],
+		},
+	},
 	build: {
 		outDir: path.resolve(__dirname, '../server/static'),
 		emptyOutDir: true,
@@ -26,5 +33,12 @@ export default defineConfig({
 	server: {
 		port: 3000,
 		cors: true,
+		proxy: {
+			'/api': {
+				target: 'http://127.0.0.1:5555/',
+				changeOrigin: true,
+				secure: false,
+			},
+		},
 	},
 });
