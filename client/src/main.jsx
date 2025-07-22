@@ -1,5 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import './styles/reset/modern-normalize.css';
+import './styles/reset/custom-reset.css';
 import './index.css';
 import { AppProvider } from './context/AppContext.jsx';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
