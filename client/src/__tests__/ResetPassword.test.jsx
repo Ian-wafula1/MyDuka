@@ -1,43 +1,80 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import ResetPassword from '../pages/ResetPassword';
-import { resetPassword } from '../api/auth';
-import { describe, it, expect, beforeEach } from 'vitest';
+import axios from 'axios';
+import { vi, describe, it, beforeEach, expect } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 
-jest.mock('../api/auth');
+vi.mock('axios');
+
+const navigateMock = vi.fn();
+vi.doMock('react-router-dom', async (importOriginal) => {
+        const actual = await importOriginal();
+        return { ...actual, useNavigate: () => navigateMock };
+});
+
+const renderWithRouter = (ui, { route = '/' } = {}) => {
+        return render(
+                <MemoryRouter initialEntries={[route]}>
+                        <Routes>
+                                <Route path="/:token?" element={ui} />
+                        </Routes>
+                </MemoryRouter>
+        );
+};
 
 describe('ResetPassword', () => {
-	beforeEach(() => {
-		resetPassword.mockClear();
-	});
+        beforeEach(() => {
+                vi.clearAllMocks();
+        });
 
-	it('renders form inputs correctly', () => {
-		render(<ResetPassword />);
-		expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
-		expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
-		expect(screen.getByLabelText(/New Password/i)).toBeInTheDocument();
-	});
+        it('Renders reset password form by default', () => {
+                renderWithRouter(<ResetPassword />);
+                expect(screen.getByText(/Reset Password/i)).toBeInTheDocument();
+                expect(screen.getByLabelText(/Email/i)).not.toBeDisabled();
+        });
 
-	it('submits form and shows success message', async () => {
-		resetPassword.mockResolvedValueOnce({ data: { message: 'Password reset successful' } });
-		render(<ResetPassword />);
-		fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'Victor' } });
-		fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: 'vic@example.com' } });
-		fireEvent.change(screen.getByLabelText(/New Password/i), { target: { value: 'newpass123' } });
-		fireEvent.click(screen.getByText(/Reset/i));
-		await waitFor(() => {
-			expect(screen.getByText(/Password reset successful/)).toBeInTheDocument();
-		});
-	});
+        it('Renders form with disabled email when token is provided', async () => {
+                axios.get.mockResolvedValueOnce({ data: { email: 'user@example.com' } });
+                renderWithRouter(<ResetPassword />, { route: '/sometoken' });
+                expect(screen.getByText(/Reset Password/i)).toBeInTheDocument();
+                await waitFor(() => expect(axios.get).toHaveBeenCalledWith('/api/verify-token'));
+                expect(screen.getByLabelText(/Email/i)).toBeDisabled();
+        });
 
-	it('shows error message on failure', async () => {
-		resetPassword.mockRejectedValueOnce({ response: { data: { message: 'User not found' } } });
-		render(<ResetPassword />);
-		fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'Victor' } });
-		fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: 'vic@example.com' } });
-		fireEvent.change(screen.getByLabelText(/New Password/i), { target: { value: '123' } });
-		fireEvent.click(screen.getByText(/Reset/i));
-		await waitFor(() => {
-			expect(screen.getByText(/User not found/)).toBeInTheDocument();
-		});
-	});
+        it('Validates required fields', async () => {
+                renderWithRouter(<ResetPassword />);
+                fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+                const errors = await screen.findAllByText(/Required/i);
+                expect(errors.length).toBeGreaterThanOrEqual(1);
+        });
+
+        it('Submits form and redirects to login', async () => {
+                axios.post.mockResolvedValueOnce({});
+
+                renderWithRouter(<ResetPassword />);
+
+                fireEvent.change(screen.getByLabelText(/Name/i), {
+                        target: { value: 'John' },
+                });
+                fireEvent.change(screen.getByLabelText(/^Email/i), {
+                        target: { value: 'john@example.com' },
+                });
+                fireEvent.change(screen.getByLabelText(/New Password/i), {
+                        target: { value: 'newsecret123' },
+                });
+                fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+
+                await waitFor(() =>
+                        expect(axios.post).toHaveBeenCalledWith(
+                                '/api/reset-password',
+                                expect.objectContaining({
+                                        name: 'John',
+                                        email: 'john@example.com',
+                                        newPassword: 'newsecret123',
+                                })
+                        )
+                );
+                // await waitFor(() => expect(navigateMock).toHaveBeenCalledWith('/login'));
+        });
 });

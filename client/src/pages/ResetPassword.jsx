@@ -1,4 +1,3 @@
-// ResetPassword.jsx
 import { Form, Formik } from 'formik';
 import { MyTextInput } from '../utils/formElements';
 import * as Yup from 'yup';

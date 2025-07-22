@@ -1,32 +1,74 @@
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter, useLocation } from 'react-router-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from '../pages/ErrorPage';
-import { describe, it, expect } from 'vitest';
+import { vi, describe, it, beforeEach, expect } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useLocation: jest.fn(),
-	useNavigate: () => jest.fn(),
-}));
+const navigateMock = vi.fn();
+let mockErrorStatus = null;
+
+vi.mock('react-router-dom', async (importOriginal) => {
+	const actual = await importOriginal();
+	return {
+		...actual,
+		useNavigate: () => navigateMock,
+		useRouteError: () => ({ status: mockErrorStatus }),
+	};
+});
+
+const renderWithDataRouter = (ui, { route = '/' } = {}) => {
+	const router = createMemoryRouter(
+		[
+			{
+				path: '*',
+				element: ui,
+				errorElement: ui,
+			},
+		],
+		{
+			initialEntries: [route],
+		}
+	);
+	return render(<RouterProvider router={router} />);
+};
 
 describe('ErrorPage', () => {
-	it('displays error message from location state', () => {
-		useLocation.mockReturnValueOnce({ state: { message: 'Custom Error' } });
-		render(
-			<MemoryRouter>
-				<ErrorPage />
-			</MemoryRouter>
-		);
-		expect(screen.getByText('Custom Error')).toBeInTheDocument();
+	beforeEach(() => {
+		vi.clearAllMocks();
+		mockErrorStatus = null;
 	});
 
-	it('displays default error message if none provided', () => {
-		useLocation.mockReturnValueOnce({});
-		render(
-			<MemoryRouter>
-				<ErrorPage />
-			</MemoryRouter>
-		);
-		expect(screen.getByText(/Oops! Something went wrong./i)).toBeInTheDocument();
+	it('Renders default error message', () => {
+		renderWithDataRouter(<ErrorPage />);
+		expect(screen.getByText(/Something went wrong/i)).toBeInTheDocument();
+		expect(screen.getByText(/We're having trouble loading this page/i)).toBeInTheDocument();
+		expect(screen.getByRole('button', { name: /go home/i })).toBeInTheDocument();
+		expect(screen.getByRole('button', { name: /go back/i })).toBeInTheDocument();
+	});
+
+	it('Renders 404 error message when status is 404', () => {
+		mockErrorStatus = 404;
+		renderWithDataRouter(<ErrorPage />);
+		expect(screen.getByText(/Page not found/i)).toBeInTheDocument();
+		expect(screen.getByText(/This page doesn't exist or has been moved/i)).toBeInTheDocument();
+	});
+
+	it('Renders server error message when status is 500+', () => {
+		mockErrorStatus = 500;
+		renderWithDataRouter(<ErrorPage />);
+		expect(screen.getByText(/Server error/i)).toBeInTheDocument();
+		expect(screen.getByText(/We're working to fix this issue/i)).toBeInTheDocument();
+	});
+
+	it('Handles go home button click', () => {
+		renderWithDataRouter(<ErrorPage />);
+		fireEvent.click(screen.getByRole('button', { name: /go home/i }));
+		expect(navigateMock).toHaveBeenCalledWith('/');
+	});
+
+	it('Handles go back button click', () => {
+		renderWithDataRouter(<ErrorPage />);
+		fireEvent.click(screen.getByRole('button', { name: /go back/i }));
+		expect(navigateMock).toHaveBeenCalledWith(-1);
 	});
 });

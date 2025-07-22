@@ -33,6 +33,10 @@ const routes = [
 				element: <ResetPassword />,
 			},
 			{
+				path: '/error',
+				element: <ErrorPage />,
+			},
+			{
 				path: '*',
 				element: <Navigate to="/" />,
 			},

@@ -78,6 +78,5 @@ describe('Signup', () => {
 				})
 			)
 		);
-		// await waitFor(() => expect(navigateMock).toHaveBeenCalledWith('/login'));
 	});
 });
