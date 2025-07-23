@@ -12,3 +12,11 @@
 .container {
 	height: 100%;
 }
+
+@font-face {
+    font-family: 'qurova';
+    src: url('./fonts/qurovademomedium-pg4lz-webfont.woff2') format('woff2'),
+         url('./fonts/qurovademomedium-pg4lz-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

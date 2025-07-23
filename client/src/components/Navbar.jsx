@@ -1,12 +1,30 @@
-// to be changed later
+import { useLocation, useNavigate } from 'react-router-dom';
+import logo from '../assets/logo.svg'
+import '../styles/navbar.css';
 
 export default function Navbar() {
-    return (
-        <div className="navbar">
-            <div className="navContainer">
-                <span className="logo" style={{marginRight: '65rem'}}>MyDuka</span>
-                <span>Account icon</span>
+	const location = useLocation();
+    const navigate = useNavigate();
+	return (
+		<div className="navbar">
+			<div className="logo" onClick={() => navigate('/')}>
+                <img src={logo} alt="Logo" />
+                <p>MyDuka</p>
             </div>
-        </div>
-    );
+			<div>
+				{location.pathname === '/' ? (
+					<div onClick={() => navigate('/login')}>
+						<p>Log in</p>
+					</div>
+				) : (
+					<div onClick={() => {
+                        localStorage.clear();
+                        navigate('/');
+                    }}>
+						<p>Log out</p>
+					</div>
+				)}
+			</div>
+		</div>
+	);
 }

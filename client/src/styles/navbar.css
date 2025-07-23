@@ -1,0 +1,52 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    margin: 1rem;
+    border-radius: 10px;
+    background-color: #ffffff33;
+    backdrop-filter: blur(20px);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    align-items: center;
+}
+
+.navbar .logo {
+    display: flex;
+    gap: .1rem;
+    align-items: center;
+    transition: transform .2s ease-in-out;
+}
+
+.navbar .logo:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.navbar .logo img {
+    width: 5rem;
+    height: 5rem;
+}
+
+.navbar .logo p {
+    font-size: 2.3rem;
+    font-family: 'qurova';
+}
+
+.navbar > div:last-child > div {
+    background-color: var(--button-bg);
+    color: #ffffff;
+    padding: .5rem 2rem;
+    border-radius: .5rem;
+    transition: transform .2s ease-in-out;
+    cursor: pointer;
+}
+
+.navbar > div:last-child > div:hover {
+    filter: brightness(.95);
+}
+
+/* active */
+.navbar > div:last-child > div:active {
+    transform: scale(.95);
+    filter: brightness(.90);
+}
