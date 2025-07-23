@@ -27,6 +27,7 @@ export default function ResetPassword() {
 							name: values.name,
 							email: values.email,
 							newPassword: values.newPassword,
+							account_type: values.account_type,
 						})
 						.then(() => {
 							navigate('/login');
