@@ -12,7 +12,6 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-    margin: 2rem 0 ;
 }
 
 .form-container {
@@ -25,6 +24,7 @@ body {
 	gap: 2.4rem;
 	align-items: center;
 	padding: 4.7rem 5.4rem;
+	margin-top: 6rem;
 }
 
 .form-container > p {
