@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import pic1 from '../assets/pic1.svg';
+import pic2 from '../assets/pic2.svg';
 
 export default function Signup() {
 	const navigate = useNavigate();
@@ -23,8 +25,11 @@ export default function Signup() {
 		}
 	}, [token]);
 	return (
-		<>
+		<div className='form-container'>
             <h1>Create {token? 'an admin account' : 'a merchant account'}</h1>
+			<p>{(!token? 'Manage your inventory and cashflow with ease. Get real-time insights into your sales and inventory turnover on-the-go.':
+				'Create an admin account to manage store inventory and cashflow with ease. Get real-time insights into your sales and inventory turnover on-the-go.'
+			 )}</p>
 			<Formik
 				initialValues={{ name: '', email: email, password: '' }}
 				validationSchema={Yup.object({
@@ -55,6 +60,8 @@ export default function Signup() {
 					<button type="submit">Submit</button>
 				</Form>
 			</Formik>
-		</>
+			<img src={pic1} alt='Woman making an order' />
+			<img src={pic2} alt="E-commerce core features" />
+		</div>
 	);
 }

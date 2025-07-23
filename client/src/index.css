@@ -1,0 +1,14 @@
+:root {
+	--light-turquoise: #b1f3f3;
+	--button-bg: #6631e3;
+	--button-color: #fff;
+	--text-colour: #282828;
+}
+
+#root {
+	height: 100vh;
+}
+
+.container {
+	height: 100%;
+}
