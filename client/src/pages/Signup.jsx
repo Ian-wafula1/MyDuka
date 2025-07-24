@@ -12,6 +12,8 @@ export default function Signup() {
 	const navigate = useNavigate();
 	const token = useParams()?.token;
 	const [email, setEmail] = useState('');
+	const [error, setError] = useState(null);
+
 	useEffect(() => {
 		if (token) {
 			axios
@@ -21,6 +23,7 @@ export default function Signup() {
 				})
 				.catch((err) => {
 					console.log(err);
+					setError(err.response.data.error);
 				});
 		}
 	}, [token]);
@@ -61,7 +64,10 @@ export default function Signup() {
 						{!token ? <MyTextInput label="Email" name="email" type="email" /> : <MyTextInput label="Email" name="email" type="email" disabled />}
 						<MyTextInput label="Password" name="password" type="password" />
 					</div>
-					<button type="submit">Submit</button>
+					<div>
+						{error && <div className="fetch error">{error}</div>}
+						<button type="submit">Submit</button>
+					</div>
 				</Form>
 			</Formik>
 			<img src={pic1} alt="Woman making an order" />

@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 export default function ResetPassword() {
 	const navigate = useNavigate();
-	const [error, setError] = useState('User does not exist');
+	const [error, setError] = useState(null);
 
 	return (
 		<div className="form-container">
@@ -52,8 +52,10 @@ export default function ResetPassword() {
 
 						<MyTextInput label="New Password" name="newPassword" type="password" />
 					</div>
-					{error && <div className="fetch error">{error}</div>}
-					<button type="submit">Submit</button>
+					<div>
+						{error && <div className="fetch error">{error}</div>}
+						<button type="submit">Submit</button>
+					</div>
 				</Form>
 			</Formik>
 			<img src={pic1} alt="Woman making an order" />

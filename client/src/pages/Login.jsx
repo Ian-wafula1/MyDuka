@@ -11,10 +11,11 @@ import { AppContext } from '../context/AppContext';
 const Login = () => {
 	const navigate = useNavigate();
 	const { setCurrentUser } = useContext(AppContext);
-	const [error, setError] = useState('User does not exist');
+	const [error, setError] = useState(null);
 	return (
 		<div className="form-container">
 			<h1>Login to MyDuka</h1>
+            <p>Ready to log in? Prove you’re you. Or at least someone with really good guessing skills.</p>
 			<Formik
 				initialValues={{ email: '', password: '', account_type: '' }}
 				validationSchema={Yup.object({
@@ -52,11 +53,13 @@ const Login = () => {
 							</MySelect>
 						</div>
 
-						{error && <div className="fetch error">{error}</div>}
+						<div>
+							{error && <div className="fetch error">{error}</div>}
 
-						<button type="submit" disabled={isSubmitting}>
-							Login
-						</button>
+							<button type="submit" disabled={isSubmitting}>
+								Login
+							</button>
+						</div>
 					</Form>
 				)}
 			</Formik>
