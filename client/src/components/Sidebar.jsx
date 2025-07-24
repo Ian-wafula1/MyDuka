@@ -6,7 +6,6 @@ import '../styles/sidebar.css';
 export default function Sidebar() {
 	const { currentUser: user } = useContext(AppContext);
     const [isOpen, setIsOpen] = useState(false);
-    console.log(user)
 	return (
 		<nav className="sidebar">
 			<ul>
@@ -23,7 +22,7 @@ export default function Sidebar() {
                             <div className='dropdown-content'>
                             {user?.stores?.map((store) => {
                                 return (
-                                    <NavLink key={store.id} to={`/stores/${store.id}`}>
+                                    <NavLink key={store.id} to={`/store/${store.id}`}>
                                         {store.name}
                                     </NavLink>
                                 );
