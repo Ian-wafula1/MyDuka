@@ -9,9 +9,8 @@ body {
 }
 
 .container:has(form) {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	display: grid;
+	place-items: center;
 }
 
 .form-container {
