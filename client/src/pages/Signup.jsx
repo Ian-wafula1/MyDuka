@@ -25,11 +25,13 @@ export default function Signup() {
 		}
 	}, [token]);
 	return (
-		<div className='form-container'>
-            <h1>Create {token? 'an admin account' : 'a merchant account'}</h1>
-			<p>{(!token? 'Manage your inventory and cashflow with ease. Get real-time insights into your sales and inventory turnover on-the-go.':
-				'Create an admin account to manage store inventory and cashflow with ease. Get real-time insights into your sales and inventory turnover on-the-go.'
-			 )}</p>
+		<div className="form-container">
+			<h1>Create {token ? 'an admin account' : 'a merchant account'}</h1>
+			<p>
+				{!token
+					? 'Manage your inventory and cashflow with ease. Get real-time insights into your sales and inventory turnover on-the-go.'
+					: 'Create an admin account to manage store inventory and cashflow with ease. Get real-time insights into your sales and inventory turnover on-the-go.'}
+			</p>
 			<Formik
 				initialValues={{ name: '', email: email, password: '' }}
 				validationSchema={Yup.object({
@@ -54,13 +56,15 @@ export default function Signup() {
 					setSubmitting(false);
 				}}>
 				<Form>
-					<MyTextInput label="Name" name="name" type="text" />
-					{!token ? <MyTextInput label="Email" name="email" type="email" /> : <MyTextInput label="Email" name="email" type="email" disabled />}
-					<MyTextInput label="Password" name="password" type="password" />
+					<div>
+						<MyTextInput label="Name" name="name" type="text" />
+						{!token ? <MyTextInput label="Email" name="email" type="email" /> : <MyTextInput label="Email" name="email" type="email" disabled />}
+						<MyTextInput label="Password" name="password" type="password" />
+					</div>
 					<button type="submit">Submit</button>
 				</Form>
 			</Formik>
-			<img src={pic1} alt='Woman making an order' />
+			<img src={pic1} alt="Woman making an order" />
 			<img src={pic2} alt="E-commerce core features" />
 		</div>
 	);

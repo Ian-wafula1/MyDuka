@@ -5,9 +5,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import pic1 from '../assets/pic1.svg';
 import pic2 from '../assets/pic2.svg';
+import { useState } from 'react';
 
 export default function ResetPassword() {
 	const navigate = useNavigate();
+	const [error, setError] = useState('User does not exist');
 
 	return (
 		<div className="form-container">
@@ -34,19 +36,23 @@ export default function ResetPassword() {
 						})
 						.catch((err) => {
 							console.log(err);
+							setError(err.response.data.error);
 						});
 					setSubmitting(false);
 				}}>
 				<Form>
-					<MyTextInput label="Name" name="name" type="text" />
-					<MyTextInput label="Email" name="email" type="email" />
-					<MySelect label="Account type" name="account_type">
-						<option value="merchant">Merchant</option>
-						<option value="admin">Admin</option>
-						<option value="clerk">Clerk</option>
-					</MySelect>
+					<div>
+						<MyTextInput label="Name" name="name" type="text" />
+						<MyTextInput label="Email" name="email" type="email" />
+						<MySelect label="Account type" name="account_type">
+							<option value="merchant">Merchant</option>
+							<option value="admin">Admin</option>
+							<option value="clerk">Clerk</option>
+						</MySelect>
 
-					<MyTextInput label="New Password" name="newPassword" type="password" />
+						<MyTextInput label="New Password" name="newPassword" type="password" />
+					</div>
+					{error && <div className="fetch error">{error}</div>}
 					<button type="submit">Submit</button>
 				</Form>
 			</Formik>
