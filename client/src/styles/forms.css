@@ -8,7 +8,7 @@ body {
     min-height: 110vh;
 }
 
-.container:has(form) {
+.container:has(.form-container) {
 	display: grid;
 	place-items: center;
 }
