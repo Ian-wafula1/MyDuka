@@ -4,11 +4,13 @@ import { useState } from 'react';
 const AppContext = createContext();
 
 const merchantObj = {
-	id: 1,
+	id: 14,
 	name: 'Ian',
 	email: 'lZL0D@example.com',
 	password: 'password',
-	account_type: 'merchant',
+	account_type: 'admin',
+	account_status: 'active',
+	merchant_id: 1,
 	stores: [
 		{
 			id: 12,
@@ -130,7 +132,7 @@ const merchantObj = {
 				{
 					id: 3,
 					quantity: 10,
-					status: 'accepted',
+					status: 'approved',
 					store_id: 12,
 					created_at: '2022-06-22T00:00:00.000Z',
 					user_id: 1,
@@ -139,7 +141,7 @@ const merchantObj = {
 				{
 					id: 4,
 					quantity: 10,
-					status: 'accepted',
+					status: 'approved',
 					store_id: 12,
 					created_at: '2022-06-22T00:00:00.000Z',
 					user_id: 1,
@@ -187,6 +189,36 @@ const merchantObj = {
 					created_at: '2022-06-22T00:00:00.000Z',
 					unit_price: 10,
 				},
+			],
+			entries: [
+				// id, quantity, payment_status, store_id, product_id, total_sum
+				{
+					id: 1,
+					quantity: 10,
+					payment_status: 'pending',
+					store_id: 12,
+					product_id: 1,
+					total_sum: 10, 
+					created_at: '2022-06-22T00:00:00.000Z',
+				},
+				{
+					id: 2,
+					quantity: 10,
+					payment_status: 'pending',
+					store_id: 12,
+					product_id: 2,
+					total_sum: 10,
+					created_at: '2022-06-22T00:00:00.000Z',
+				},
+				{
+					id: 3,
+					quantity: 10,
+					payment_status: 'paid',
+					store_id: 12,
+					product_id: 3,
+					total_sum: 10,
+					created_at: '2022-06-22T00:00:00.000Z',
+				}
 			]
 		},
 		{
@@ -203,7 +235,7 @@ const merchantObj = {
 				//id, name, email, password, account_type, account_status
 				{
 					id: 1,
-					name: 'Ian',
+					name: 'Stephen',
 					email: 'lZL0D@example.com',
 					password: 'password',
 					account_type: 'clerk',
@@ -211,7 +243,7 @@ const merchantObj = {
 				}, 
 				{
 					id: 2,
-					name: 'John',
+					name: 'Lucy',
 					email: 'lZL0D@example.com',
 					password: 'password',
 					account_type: 'clerk',
@@ -306,6 +338,35 @@ const merchantObj = {
 					created_at: '2022-06-22T00:00:00.000Z',
 					unit_price: 10,
 				},
+			], 
+			entries: [
+				{
+					id: 1,
+					quantity: 10,
+					payment_status: 'pending',
+					store_id: 13,
+					product_id: 1,
+					total_sum: 100,
+					created_at: '2022-06-22T00:00:00.000Z',
+				}, 
+				{
+					id: 2,
+					quantity: 10,
+					payment_status: 'pending',
+					store_id: 13,
+					product_id: 2,
+					total_sum: 100,
+					created_at: '2022-06-22T00:00:00.000Z',
+				}, 
+				{
+					id: 3,
+					quantity: 10,
+					payment_status: 'pending',
+					store_id: 13,
+					product_id: 3,
+					total_sum: 100,
+					created_at: '2022-06-22T00:00:00.000Z',
+				},
 			]
 		},
 		{
@@ -318,8 +379,17 @@ const merchantObj = {
 			products: [],
 			supply_requests: [],
 			transactions: [],
+			entries: [],
 		},
 	],
+	merchant: {
+		id: 1,
+		name: 'Merchant 1',
+		email: 'lZL0D@example.com',
+		password: 'password',
+		account_type: 'merchant',
+		stores: [],
+	},
 };
 
 function AppProvider({ children }) {
