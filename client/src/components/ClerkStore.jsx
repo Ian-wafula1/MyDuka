@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useState } from 'react';
 
-export default function ClerkStore({ store }) {
+export default function ClerkStore({ store, setStore }) {
 	const [isOpen, setIsOpen] = useState(false);
 	return (
 		<>
@@ -49,6 +49,23 @@ export default function ClerkStore({ store }) {
                                         })
                                         .then(() => {
                                             setIsOpen(false);
+                                            setStore(x => {
+                                                return {
+                                                    ...x,
+                                                    entries: [
+                                                        ...x.entries,
+                                                        {
+                                                            id: x.entries.length + 1,
+                                                            product_name: values.product_name,
+                                                            quantity: values.quantity,
+                                                            total_sum: values.quantity * product.buying_price,
+                                                            store_id: store.id,
+                                                            product_id: product.id,
+                                                            payment_status: 'pending',
+                                                        },
+                                                    ],
+                                                }
+                                            })
                                         })
                                         .catch((err) => {
                                             console.log(err);
@@ -58,7 +75,6 @@ export default function ClerkStore({ store }) {
                             >
                                 {({ values }) => (
                                     <Form>
-                                    {/* <MyTextInput name="product_name" type="text" label="Product Name" /> */}
                                     <MySelect name="product_name" label="Product Name">
                                         {store.products.map((product) => {
                                             return (
@@ -71,7 +87,6 @@ export default function ClerkStore({ store }) {
                                     <MyTextInput name="quantity" type="number" label="Quantity" />
                                     <div className='total_sum'>
                                         Total Sum: <span>{(()=>{
-                                            // use regex
                                             const product = store?.products?.find((product) => product.name.toLowerCase() === values?.product_name.toLowerCase())
                                             return product ?  `$${+product?.buying_price * values?.quantity}` : 'N/A'
                                         })()}</span>
