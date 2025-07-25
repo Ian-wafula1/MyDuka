@@ -45,6 +45,29 @@ export default function AdminStore({ store, setStore }) {
         .catch(err => console.log(err))
     }
 
+    function changeEntryStatus() {
+        axios.patch(`/api/entries/${this.id}`, {
+            payment_status: this.payment_status === 'pending' ? 'paid' : 'pending'
+        })
+        .then(() => {
+            setStore(store => {
+                return {
+                    ...store,
+                    entries: store.entries.map(entry => {
+                        if (entry.id === this.id) {
+                            return {
+                                ...entry,
+                                payment_status: entry.payment_status === 'pending' ? 'paid' : 'pending'
+                            }
+                        }
+                        return entry
+                    })
+                }
+            })
+        })
+        .catch(err => console.log(err))
+    }
+
 	return (
 		<>
 			<div className="card clerks">
@@ -114,7 +137,7 @@ export default function AdminStore({ store, setStore }) {
 									<p>Status: {entry.payment_status}</p>
 									<p>Total: {entry.total_sum}</p>
 									<p>Date: {entry.created_at.split('T').join(', ').split('.')[0]}</p>
-									<button>Change status</button>
+									<button onClick={changeEntryStatus.bind(entry)}>Change status</button>
 								</div>
 							);
 						})}
