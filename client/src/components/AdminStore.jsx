@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { MyTextInput } from '../utils/formElements';
+import ProductsCard from './ProductsCard';
 
 export default function AdminStore({ store, setStore }) {
 
@@ -69,24 +70,24 @@ export default function AdminStore({ store, setStore }) {
     }
 
     function handleSupplyRequest(action) {
-        // axios.patch(`/api/supply-requests/${this.id}`, {
-        //     status: action
-        // })
-        // .then(() => {
-        // })
-        setStore(store => {
-            return {
-                ...store,
-                supply_requests: store.supply_requests.map(request => {
-                    if (request.id === this.id) {
-                        return {
-                            ...request,
-                            status: action
-                        }
-                    }
-                    return request
-                })
-            }
+        axios.patch(`/api/supply-requests/${this.id}`, {
+            status: action
+        })
+        .then(() => {
+			setStore(store => {
+				return {
+					...store,
+					supply_requests: store.supply_requests.map(request => {
+						if (request.id === this.id) {
+							return {
+								...request,
+								status: action
+							}
+						}
+						return request
+					})
+				}
+			})
         })
         .catch(err => console.log(err))
     }
@@ -213,6 +214,7 @@ export default function AdminStore({ store, setStore }) {
 						})}
 				</div>
 			</div>
+			<ProductsCard store={store} />
 		</>
 	);
 }
