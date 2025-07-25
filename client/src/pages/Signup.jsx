@@ -33,7 +33,7 @@ export default function Signup() {
 			<p>
 				{!token
 					? 'Manage your inventory and cashflow with ease. Get real-time insights into your sales and inventory turnover on-the-go.'
-					: 'Create an admin account to manage store inventory and cashflow with ease. Get real-time insights into your sales and inventory turnover on-the-go.'}
+					: 'Register your admin account to manage clerks, handle supply requests and get real-time insights to sales and inventory turnover.'}
 			</p>
 			<Formik
 				initialValues={{ name: '', email: email, password: '' }}
