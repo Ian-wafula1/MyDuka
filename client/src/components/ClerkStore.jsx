@@ -6,10 +6,76 @@ import axios from 'axios';
 import { useState } from 'react';
 
 export default function ClerkStore({ store, setStore }) {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState({
+		products: false,
+		entries: false,
+		supplyRequests: false
+	});
+	const [searchTerm, setSearchTerm] = useState('');
 	return (
 		<>
-			<ProductsCard store={store} />
+			{/* <ProductsCard store={store} /> */}
+			<div className="card products">
+				<h1>Products</h1>
+				<div className="search">
+					<input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search..." />
+					<button>Search</button>
+				</div>
+				<div>
+					{store?.products?.filter(product=>product.name.toLowerCase().includes(searchTerm.toLowerCase())).map((product) => {
+						return (
+							<div key={product.id}>
+								<p>{product.name}</p>
+								<p>In stock: {product.quantity_in_stock}</p>
+								<p>Spoilt: {product.quantity_spoilt}</p>
+								<p>Buying Price: {product.buying_price}</p>
+								<p>Selling Price: {product.selling_price}</p>
+							</div>
+						);
+					})}
+				</div>
+				<div>
+					<button onClick={() => setIsOpen((x) => ({ ...x, products: !x.products }))}>{isOpen.products ? 'Close' : 'Add Product'}</button>
+					{isOpen.products && (
+						<Formik
+							initialValues={{
+								name: '',
+								buying_price: '',
+								selling_price: '',
+								quantity_in_stock: '',
+								quantity_spoilt: ''
+							}}
+							validationSchema={Yup.object({
+								name: Yup.string().required(),
+								buying_price: Yup.number().moreThan(0).required(),
+								selling_price: Yup.number().moreThan(0).required(),
+								quantity_in_stock: Yup.number().required(),
+								quantity_spoilt: Yup.number().required()
+							})}
+							onSubmit={(values) => {
+								axios
+									.post('http://localhost:5000/products', values)
+									.then((res) => {
+										setStore((x) => ({ ...x, products: [...x.products, res.data] }));
+										setIsOpen((x) => ({ ...x, products: false }));
+									})
+									.catch((err) => {
+										console.log(err);
+									});
+							}}
+						>
+							<Form>
+								<MyTextInput name="name" type="text" label="Product Name" />
+								<MyTextInput name="buying_price" type="number" label="Buying Price" />
+								<MyTextInput name="selling_price" type="number" label="Selling Price" />
+								<MyTextInput name="quantity_in_stock" type="number" label="Quantity In Stock" />
+								<MyTextInput name="quantity_spoilt" type="number" label="Quantity Spoilt" />
+								<button type="submit">Add Product</button>
+							</Form>
+						</Formik>
+					)}
+				</div>
+			</div>
 			<div className="card entries">
 				<h1>Entries</h1>
 				<div>
@@ -28,9 +94,9 @@ export default function ClerkStore({ store, setStore }) {
 						})}
 				</div>
 				<div>
-					<button onClick={() => setIsOpen(!isOpen)}>{isOpen ? 'Close' : 'Add Entry'}</button>
+					<button onClick={() => setIsOpen((x) => ({ ...x, entries: !x.entries }))}>{isOpen.entries ? 'Close' : 'Add Entry'}</button>
 					{
-						<div style={isOpen ? { display: 'block' } : { display: 'none' }}>
+						<div style={isOpen.entries ? { display: 'block' } : { display: 'none' }}>
 							<Formik
 								initialValues={{ product_name: '', quantity: 1, payment_status: 'pending' }}
 								validationSchema={Yup.object({
@@ -50,7 +116,7 @@ export default function ClerkStore({ store, setStore }) {
 											store_id: store.id,
 										})
 										.then(() => {
-											setIsOpen(false);
+											setIsOpen((x) => ({ ...x, entries: false }));
 											setStore((x) => {
 												return {
 													...x,
@@ -122,9 +188,9 @@ export default function ClerkStore({ store, setStore }) {
 					})}
 				</div>
 				<div>
-					<button onClick={() => setIsOpen(!isOpen)}>{isOpen ? 'Close' : 'Add Request'}</button>
+					<button onClick={() => setIsOpen((x) => ({ ...x, supplyRequests: !x.supplyRequests }))}>{isOpen.supplyRequests ? 'Close' : 'Add Request'}</button>
 					{
-						<div style={isOpen ? { display: 'block' } : { display: 'none' }}>
+						<div style={isOpen.supplyRequests ? { display: 'block' } : { display: 'none' }}>
 							<Formik
 								initialValues={{ product_name: '', quantity: 1 }}
 								validationSchema={Yup.object({
@@ -141,7 +207,7 @@ export default function ClerkStore({ store, setStore }) {
 											store_id: store.id,
 										})
 										.then(() => {
-											setIsOpen(false);
+											setIsOpen((x) => ({ ...x, supplyRequests: false }));
 											setStore((x) => {
 												return {
 													...x,
@@ -154,7 +220,7 @@ export default function ClerkStore({ store, setStore }) {
 															store_id: store.id,
 															product_id: product.id,
 															status: 'pending',
-                                                            created_at: new Date().toISOString(),
+															created_at: new Date().toISOString(),
 														},
 													],
 												};
