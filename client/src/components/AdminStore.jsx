@@ -4,12 +4,46 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { MyTextInput } from '../utils/formElements';
 
-export default function AdminStore({ store }) {
-	const addClerk = () => {
-		axios.post('/api/clerk', {});
-	};
+export default function AdminStore({ store, setStore }) {
 
 	const [isOpen, setIsOpen] = useState(false);
+
+    function removeClerk() {
+        axios.delete(`/api/users/clerk/${this.id}`)
+        .then(() => {
+            setStore(store => {
+                return {
+                    ...store,
+                    users: store.users.filter(user => user.id !== this.id && user.account_type === 'clerk')
+                }
+            })
+            console.log(`Clerk ${this.name} removed`)
+        })
+        .catch(err => console.log(err))
+    }
+
+    function changeAccountStatus() {
+        axios.patch(`/api/users/clerk/${this.id}`, {
+            account_status: this.account_status === 'active' ? 'inactive' : 'active'
+        })
+        .then(() => {
+            setStore(store => {
+                return {
+                    ...store,
+                    users: store.users.map(user => {
+                        if (user.id === this.id) {
+                            return {
+                                ...user,
+                                account_status: user.account_status === 'active' ? 'inactive' : 'active'
+                            }
+                        }
+                        return user
+                    })
+                }
+            })
+        })
+        .catch(err => console.log(err))
+    }
 
 	return (
 		<>
@@ -22,8 +56,10 @@ export default function AdminStore({ store }) {
 							return (
 								<div key={clerk.id}>
 									<p>{clerk.name}</p>
-									<button>{clerk.account_status == 'active' ? 'Deactivate' : 'Activate'}</button>
-									<button>Remove</button>
+                                    <p>{clerk.email}</p>
+                                    <p>{clerk.account_status}</p>
+									<button onClick={changeAccountStatus.bind(clerk)}>{clerk.account_status == 'active' ? 'Deactivate' : 'Activate'}</button>
+									<button onClick={removeClerk.bind(clerk)}>Remove</button>
 								</div>
 							);
 						})}

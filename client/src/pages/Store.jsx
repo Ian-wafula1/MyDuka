@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import { AppContext } from '../context/AppContext';
@@ -7,9 +7,9 @@ import AdminStore from '../components/AdminStore';
 import ClerkStore from '../components/ClerkStore';
 
 export default function Store() {
-	const { currentUser } = useContext(AppContext);
+	const { currentUser, setCurrentUser } = useContext(AppContext);
 	const { id } = useParams();
-	const store = currentUser?.stores?.find((store) => store.id === Number(id))
+	const [store, setStore] = useState(currentUser?.stores?.find((store) => store.id === Number(id)))
 	return (
 		<>
 			<Sidebar />
@@ -19,7 +19,7 @@ export default function Store() {
                     {currentUser.account_type === 'merchant' ? (
                         <MerchantStore />
                     ): currentUser.account_type === 'admin' ? (
-                        <AdminStore store={store} user={currentUser} />
+                        <AdminStore store={store} setStore={setStore} currentUser={currentUser} setCurrentUser={setCurrentUser} />
                     ):  <ClerkStore />}
                 </div>
 			</div>
