@@ -39,7 +39,7 @@ export default function Store() {
                         <MerchantStore />
                     ): currentUser.account_type === 'admin' ? (
                         <AdminStore store={store} setStore={setStore} currentUser={currentUser} setCurrentUser={setCurrentUser} />
-                    ):  <ClerkStore />}
+                    ):  <ClerkStore store={store} />}
                 </div>
 			</div>
 		</>

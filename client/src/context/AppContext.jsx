@@ -8,7 +8,7 @@ const merchantObj = {
 	name: 'Ian',
 	email: 'lZL0D@example.com',
 	password: 'password',
-	account_type: 'admin',
+	account_type: 'clerk',
 	account_status: 'active',
 	merchant_id: 1,
 	stores: [
