@@ -6,91 +6,94 @@ import { MyTextInput } from '../utils/formElements';
 import ProductsCard from './ProductsCard';
 
 export default function AdminStore({ store, setStore }) {
-
 	const [isOpen, setIsOpen] = useState(false);
 
-    function removeClerk() {
-        axios.delete(`/api/users/clerk/${this.id}`)
-        .then(() => {
-            setStore(store => {
-                return {
-                    ...store,
-                    users: store.users.filter(user => user.id !== this.id && user.account_type === 'clerk')
-                }
-            })
-            console.log(`Clerk ${this.name} removed`)
-        })
-        .catch(err => console.log(err))
-    }
-
-    function changeAccountStatus() {
-        axios.patch(`/api/users/clerk/${this.id}`, {
-            account_status: this.account_status === 'active' ? 'inactive' : 'active'
-        })
-        .then(() => {
-            setStore(store => {
-                return {
-                    ...store,
-                    users: store.users.map(user => {
-                        if (user.id === this.id) {
-                            return {
-                                ...user,
-                                account_status: user.account_status === 'active' ? 'inactive' : 'active'
-                            }
-                        }
-                        return user
-                    })
-                }
-            })
-        })
-        .catch(err => console.log(err))
-    }
-
-    function changeEntryStatus() {
-        axios.patch(`/api/entries/${this.id}`, {
-            payment_status: this.payment_status === 'pending' ? 'paid' : 'pending'
-        })
-        .then(() => {
-            setStore(store => {
-                return {
-                    ...store,
-                    entries: store.entries.map(entry => {
-                        if (entry.id === this.id) {
-                            return {
-                                ...entry,
-                                payment_status: entry.payment_status === 'pending' ? 'paid' : 'pending'
-                            }
-                        }
-                        return entry
-                    })
-                }
-            })
-        })
-        .catch(err => console.log(err))
-    }
-
-    function handleSupplyRequest(action) {
-        axios.patch(`/api/supply-requests/${this.id}`, {
-            status: action
-        })
-        .then(() => {
-			setStore(store => {
-				return {
-					...store,
-					supply_requests: store.supply_requests.map(request => {
-						if (request.id === this.id) {
-							return {
-								...request,
-								status: action
-							}
-						}
-						return request
-					})
-				}
+	function removeClerk() {
+		axios
+			.delete(`/api/users/clerk/${this.id}`)
+			.then(() => {
+				setStore((store) => {
+					return {
+						...store,
+						users: store.users.filter((user) => user.id !== this.id && user.account_type === 'clerk'),
+					};
+				});
+				console.log(`Clerk ${this.name} removed`);
 			})
-        })
-        .catch(err => console.log(err))
-    }
+			.catch((err) => console.log(err));
+	}
+
+	function changeAccountStatus() {
+		axios
+			.patch(`/api/users/clerk/${this.id}`, {
+				account_status: this.account_status === 'active' ? 'inactive' : 'active',
+			})
+			.then(() => {
+				setStore((store) => {
+					return {
+						...store,
+						users: store.users.map((user) => {
+							if (user.id === this.id) {
+								return {
+									...user,
+									account_status: user.account_status === 'active' ? 'inactive' : 'active',
+								};
+							}
+							return user;
+						}),
+					};
+				});
+			})
+			.catch((err) => console.log(err));
+	}
+
+	function changeEntryStatus() {
+		axios
+			.patch(`/api/entries/${this.id}`, {
+				payment_status: this.payment_status === 'pending' ? 'paid' : 'pending',
+			})
+			.then(() => {
+				setStore((store) => {
+					return {
+						...store,
+						entries: store.entries.map((entry) => {
+							if (entry.id === this.id) {
+								return {
+									...entry,
+									payment_status: entry.payment_status === 'pending' ? 'paid' : 'pending',
+								};
+							}
+							return entry;
+						}),
+					};
+				});
+			})
+			.catch((err) => console.log(err));
+	}
+
+	function handleSupplyRequest(action) {
+		axios
+			.patch(`/api/supply-requests/${this.id}`, {
+				status: action,
+			})
+			.then(() => {
+				setStore((store) => {
+					return {
+						...store,
+						supply_requests: store.supply_requests.map((request) => {
+							if (request.id === this.id) {
+								return {
+									...request,
+									status: action,
+								};
+							}
+							return request;
+						}),
+					};
+				});
+			})
+			.catch((err) => console.log(err));
+	}
 
 	return (
 		<>
@@ -103,8 +106,8 @@ export default function AdminStore({ store, setStore }) {
 							return (
 								<div key={clerk.id}>
 									<p>{clerk.name}</p>
-                                    <p>{clerk.email}</p>
-                                    <p>{clerk.account_status}</p>
+									<p>{clerk.email}</p>
+									<p>{clerk.account_status}</p>
 									<button onClick={changeAccountStatus.bind(clerk)}>{clerk.account_status == 'active' ? 'Deactivate' : 'Activate'}</button>
 									<button onClick={removeClerk.bind(clerk)}>Remove</button>
 								</div>
@@ -130,8 +133,9 @@ export default function AdminStore({ store, setStore }) {
 										password: values.password,
 										account_type: values.account_type,
 									})
-									.then(() => {
+									.then((res) => {
 										setIsOpen(false);
+										setStore((store) => ({...store, users: [...store.users, res.data],}));
 									})
 									.catch((err) => {
 										console.log(err);
@@ -178,7 +182,7 @@ export default function AdminStore({ store, setStore }) {
 									<p>Product: {store.products.find((product) => product.id === request.product_id).name}</p>
 									<p>Quantity: {request.quantity}</p>
 									<p>Date: {request.created_at.split('T').join(', ').split('.')[0]}</p>
-                                    <p>Status: {request.status}</p>
+									<p>Status: {request.status}</p>
 									<button onClick={() => handleSupplyRequest.call(request, 'approved')}>Approve</button>
 									<button onClick={() => handleSupplyRequest.call(request, 'denied')}>Deny</button>
 								</div>
@@ -194,7 +198,7 @@ export default function AdminStore({ store, setStore }) {
 									<p>Product: {store.products.find((product) => product.id === request.product_id).name}</p>
 									<p>Quantity: {request.quantity}</p>
 									<p>Date: {request.created_at.split('T').join(', ').split('.')[0]}</p>
-                                    <p>Status: {request.status}</p>
+									<p>Status: {request.status}</p>
 								</div>
 							);
 						})}
@@ -208,7 +212,7 @@ export default function AdminStore({ store, setStore }) {
 									<p>Product: {store.products.find((product) => product.id === request.product_id).name}</p>
 									<p>Quantity: {request.quantity}</p>
 									<p>Date: {request.created_at.split('T').join(', ').split('.')[0]}</p>
-                                    <p>Status: {request.status}</p>
+									<p>Status: {request.status}</p>
 								</div>
 							);
 						})}

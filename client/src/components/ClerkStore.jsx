@@ -9,12 +9,11 @@ export default function ClerkStore({ store, setStore }) {
 	const [isOpen, setIsOpen] = useState({
 		products: false,
 		entries: false,
-		supplyRequests: false
+		supplyRequests: false,
 	});
 	const [searchTerm, setSearchTerm] = useState('');
 	return (
 		<>
-			{/* <ProductsCard store={store} /> */}
 			<div className="card products">
 				<h1>Products</h1>
 				<div className="search">
@@ -22,17 +21,19 @@ export default function ClerkStore({ store, setStore }) {
 					<button>Search</button>
 				</div>
 				<div>
-					{store?.products?.filter(product=>product.name.toLowerCase().includes(searchTerm.toLowerCase())).map((product) => {
-						return (
-							<div key={product.id}>
-								<p>{product.name}</p>
-								<p>In stock: {product.quantity_in_stock}</p>
-								<p>Spoilt: {product.quantity_spoilt}</p>
-								<p>Buying Price: {product.buying_price}</p>
-								<p>Selling Price: {product.selling_price}</p>
-							</div>
-						);
-					})}
+					{store?.products
+						?.filter((product) => product.name.toLowerCase().includes(searchTerm.toLowerCase()))
+						.map((product) => {
+							return (
+								<div key={product.id}>
+									<p>{product.name}</p>
+									<p>In stock: {product.quantity_in_stock}</p>
+									<p>Spoilt: {product.quantity_spoilt}</p>
+									<p>Buying Price: {product.buying_price}</p>
+									<p>Selling Price: {product.selling_price}</p>
+								</div>
+							);
+						})}
 				</div>
 				<div>
 					<button onClick={() => setIsOpen((x) => ({ ...x, products: !x.products }))}>{isOpen.products ? 'Close' : 'Add Product'}</button>
@@ -43,14 +44,14 @@ export default function ClerkStore({ store, setStore }) {
 								buying_price: '',
 								selling_price: '',
 								quantity_in_stock: '',
-								quantity_spoilt: ''
+								quantity_spoilt: '',
 							}}
 							validationSchema={Yup.object({
 								name: Yup.string().required(),
 								buying_price: Yup.number().moreThan(0).required(),
 								selling_price: Yup.number().moreThan(0).required(),
 								quantity_in_stock: Yup.number().required(),
-								quantity_spoilt: Yup.number().required()
+								quantity_spoilt: Yup.number().required(),
 							})}
 							onSubmit={(values) => {
 								axios
@@ -62,8 +63,7 @@ export default function ClerkStore({ store, setStore }) {
 									.catch((err) => {
 										console.log(err);
 									});
-							}}
-						>
+							}}>
 							<Form>
 								<MyTextInput name="name" type="text" label="Product Name" />
 								<MyTextInput name="buying_price" type="number" label="Buying Price" />
@@ -115,25 +115,9 @@ export default function ClerkStore({ store, setStore }) {
 											total_sum: values.quantity * product.buying_price,
 											store_id: store.id,
 										})
-										.then(() => {
+										.then((res) => {
 											setIsOpen((x) => ({ ...x, entries: false }));
-											setStore((x) => {
-												return {
-													...x,
-													entries: [
-														...x.entries,
-														{
-															id: x.entries.length + 1,
-															product_name: values.product_name,
-															quantity: values.quantity,
-															total_sum: values.quantity * product.buying_price,
-															store_id: store.id,
-															product_id: product.id,
-															payment_status: 'pending',
-														},
-													],
-												};
-											});
+											setStore((x) => ({...x, entries: [...x.entries, res.data],}));
 										})
 										.catch((err) => {
 											console.log(err);
@@ -198,33 +182,18 @@ export default function ClerkStore({ store, setStore }) {
 									quantity: Yup.number().moreThan(0).required('Required'),
 								})}
 								onSubmit={(values, { setSubmitting }) => {
-									const product = store?.products?.find((product) => product.name.toLowerCase() === values.product_name.toLowerCase());
-
 									axios
 										.post('/api/supply-requests', {
 											product_name: values.product_name,
 											quantity: values.quantity,
 											store_id: store.id,
 										})
-										.then(() => {
+										.then((res) => {
 											setIsOpen((x) => ({ ...x, supplyRequests: false }));
-											setStore((x) => {
-												return {
-													...x,
-													supply_requests: [
-														...x.supply_requests,
-														{
-															id: x.supply_requests.length + 1,
-															product_name: values.product_name,
-															quantity: values.quantity,
-															store_id: store.id,
-															product_id: product.id,
-															status: 'pending',
-															created_at: new Date().toISOString(),
-														},
-													],
-												};
-											});
+											setStore((x) => ({
+												...x,
+												supply_requests: [...x.supply_requests, res.data],
+											}))
 										})
 										.catch((err) => {
 											console.log(err);
