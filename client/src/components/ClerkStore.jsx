@@ -31,10 +31,11 @@ export default function ClerkStore({ store, setStore }) {
 					<button onClick={() => setIsOpen(!isOpen)}>{isOpen ? 'Close' : 'Add Entry'}</button>
                     {<div style={isOpen ? { display: 'block' } : { display: 'none' }} >
                             <Formik
-                                initialValues={{ product_name: '', quantity: 1 }}
+                                initialValues={{ product_name: '', quantity: 1, payment_status: 'pending' }}
                                 validationSchema={Yup.object({
                                     product_name: Yup.string().required('Required'),
                                     quantity: Yup.number().moreThan(0).required('Required'),
+                                    payment_status: Yup.string().oneOf(['pending', 'paid']).required('Required'),
                                 })}
                                 onSubmit={(values, { setSubmitting }) => {
                                     const product = store?.products
@@ -44,6 +45,7 @@ export default function ClerkStore({ store, setStore }) {
                                         .post('/api/entries', {
                                             product_name: values.product_name,
                                             quantity: values.quantity,
+                                            payment_status: values.payment_status,
                                             total_sum: values.quantity * product.buying_price,
                                             store_id: store.id,
                                         })
@@ -83,6 +85,10 @@ export default function ClerkStore({ store, setStore }) {
                                                 </option>
                                             );
                                         })}
+                                    </MySelect>
+                                    <MySelect name="payment_status" label="Payment Status">
+                                        <option value="pending">Pending</option>
+                                        <option value="paid">Paid</option>
                                     </MySelect>
                                     <MyTextInput name="quantity" type="number" label="Quantity" />
                                     <div className='total_sum'>
