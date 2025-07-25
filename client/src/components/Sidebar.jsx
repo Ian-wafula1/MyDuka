@@ -3,9 +3,10 @@ import { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import '../styles/sidebar.css';
 
-export default function Sidebar() {
+export default function Sidebar({handleUrlChange}) {
 	const { currentUser: user } = useContext(AppContext);
     const [isOpen, setIsOpen] = useState(false);
+
 	return (
 		<nav className="sidebar">
 			<ul>
@@ -22,7 +23,7 @@ export default function Sidebar() {
                             <div className='dropdown-content'>
                             {user?.stores?.map((store) => {
                                 return (
-                                    <NavLink key={store.id} to={`/store/${store.id}`}>
+                                    <NavLink onClick={() => handleUrlChange(store.id)} key={store.id} to={`/store/${store.id}`}>
                                         {store.name}
                                     </NavLink>
                                 );

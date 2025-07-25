@@ -69,24 +69,24 @@ export default function AdminStore({ store, setStore }) {
     }
 
     function handleSupplyRequest(action) {
-        axios.patch(`/api/supply-requests/${this.id}`, {
-            status: action
-        })
-        .then(() => {
-            setStore(store => {
-                return {
-                    ...store,
-                    supply_requests: store.supply_requests.map(request => {
-                        if (request.id === this.id) {
-                            return {
-                                ...request,
-                                status: action
-                            }
+        // axios.patch(`/api/supply-requests/${this.id}`, {
+        //     status: action
+        // })
+        // .then(() => {
+        // })
+        setStore(store => {
+            return {
+                ...store,
+                supply_requests: store.supply_requests.map(request => {
+                    if (request.id === this.id) {
+                        return {
+                            ...request,
+                            status: action
                         }
-                        return request
-                    })
-                }
-            })
+                    }
+                    return request
+                })
+            }
         })
         .catch(err => console.log(err))
     }

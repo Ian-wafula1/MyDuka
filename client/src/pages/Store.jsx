@@ -10,9 +10,28 @@ export default function Store() {
 	const { currentUser, setCurrentUser } = useContext(AppContext);
 	const { id } = useParams();
 	const [store, setStore] = useState(currentUser?.stores?.find((store) => store.id === Number(id)))
+	function handleUrlChange(id) {
+		setCurrentUser(user => {
+			return {
+				...user,
+				stores: user.stores.map(x => {
+					if (x.id === store.id) {
+						return {
+							...x,
+							...store
+						}
+					}
+					return {
+						...x
+					}
+				})
+			}
+		})
+		setStore(()=>currentUser?.stores?.find((store) => store.id === Number(id)))
+	}
 	return (
 		<>
-			<Sidebar />
+			<Sidebar handleUrlChange={handleUrlChange} />
 			<div>
 				<h1>{store?.name || 'Store'}</h1>
                 <div>
