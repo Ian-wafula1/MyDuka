@@ -29,80 +29,160 @@ export default function ClerkStore({ store, setStore }) {
 				</div>
 				<div>
 					<button onClick={() => setIsOpen(!isOpen)}>{isOpen ? 'Close' : 'Add Entry'}</button>
-                    {<div style={isOpen ? { display: 'block' } : { display: 'none' }} >
-                            <Formik
-                                initialValues={{ product_name: '', quantity: 1, payment_status: 'pending' }}
-                                validationSchema={Yup.object({
-                                    product_name: Yup.string().required('Required'),
-                                    quantity: Yup.number().moreThan(0).required('Required'),
-                                    payment_status: Yup.string().oneOf(['pending', 'paid']).required('Required'),
-                                })}
-                                onSubmit={(values, { setSubmitting }) => {
-                                    const product = store?.products
-                                        ?.find((product) => product.id === values.product_id);
+					{
+						<div style={isOpen ? { display: 'block' } : { display: 'none' }}>
+							<Formik
+								initialValues={{ product_name: '', quantity: 1, payment_status: 'pending' }}
+								validationSchema={Yup.object({
+									product_name: Yup.string().required('Required'),
+									quantity: Yup.number().moreThan(0).required('Required'),
+									payment_status: Yup.string().oneOf(['pending', 'paid']).required('Required'),
+								})}
+								onSubmit={(values, { setSubmitting }) => {
+									const product = store?.products?.find((product) => product.id === values.product_id);
 
-                                    axios
-                                        .post('/api/entries', {
-                                            product_name: values.product_name,
-                                            quantity: values.quantity,
-                                            payment_status: values.payment_status,
-                                            total_sum: values.quantity * product.buying_price,
-                                            store_id: store.id,
-                                        })
-                                        .then(() => {
-                                            setIsOpen(false);
-                                            setStore(x => {
-                                                return {
-                                                    ...x,
-                                                    entries: [
-                                                        ...x.entries,
-                                                        {
-                                                            id: x.entries.length + 1,
-                                                            product_name: values.product_name,
-                                                            quantity: values.quantity,
-                                                            total_sum: values.quantity * product.buying_price,
-                                                            store_id: store.id,
-                                                            product_id: product.id,
-                                                            payment_status: 'pending',
-                                                        },
-                                                    ],
-                                                }
-                                            })
-                                        })
-                                        .catch((err) => {
-                                            console.log(err);
-                                        });
-                                    setSubmitting(false);
-                                }}
-                            >
-                                {({ values }) => (
-                                    <Form>
-                                    <MySelect name="product_name" label="Product Name">
-                                        {store.products.map((product) => {
-                                            return (
-                                                <option key={product.id} value={product.name}>
-                                                    {product.name}
-                                                </option>
-                                            );
-                                        })}
-                                    </MySelect>
-                                    <MySelect name="payment_status" label="Payment Status">
-                                        <option value="pending">Pending</option>
-                                        <option value="paid">Paid</option>
-                                    </MySelect>
-                                    <MyTextInput name="quantity" type="number" label="Quantity" />
-                                    <div className='total_sum'>
-                                        Total Sum: <span>{(()=>{
-                                            const product = store?.products?.find((product) => product.name.toLowerCase() === values?.product_name.toLowerCase())
-                                            return product ?  `$${+product?.buying_price * values?.quantity}` : 'N/A'
-                                        })()}</span>
-                                    </div>
-                                    <button type="submit">Submit</button>
-                                </Form>
-                                )}
-                            </Formik>
-                        </div>
-                    }
+									axios
+										.post('/api/entries', {
+											product_name: values.product_name,
+											quantity: values.quantity,
+											payment_status: values.payment_status,
+											total_sum: values.quantity * product.buying_price,
+											store_id: store.id,
+										})
+										.then(() => {
+											setIsOpen(false);
+											setStore((x) => {
+												return {
+													...x,
+													entries: [
+														...x.entries,
+														{
+															id: x.entries.length + 1,
+															product_name: values.product_name,
+															quantity: values.quantity,
+															total_sum: values.quantity * product.buying_price,
+															store_id: store.id,
+															product_id: product.id,
+															payment_status: 'pending',
+														},
+													],
+												};
+											});
+										})
+										.catch((err) => {
+											console.log(err);
+										});
+									setSubmitting(false);
+								}}>
+								{({ values }) => (
+									<Form>
+										<MySelect name="product_name" label="Product Name">
+											{store.products.map((product) => {
+												return (
+													<option key={product.id} value={product.name}>
+														{product.name}
+													</option>
+												);
+											})}
+										</MySelect>
+										<MySelect name="payment_status" label="Payment Status">
+											<option value="pending">Pending</option>
+											<option value="paid">Paid</option>
+										</MySelect>
+										<MyTextInput name="quantity" type="number" label="Quantity" />
+										<div className="total_sum">
+											Total Sum:{' '}
+											<span>
+												{(() => {
+													const product = store?.products?.find((product) => product.name.toLowerCase() === values?.product_name.toLowerCase());
+													return product ? `$${+product?.buying_price * values?.quantity}` : 'N/A';
+												})()}
+											</span>
+										</div>
+										<button type="submit">Submit</button>
+									</Form>
+								)}
+							</Formik>
+						</div>
+					}
+				</div>
+			</div>
+			<div className="card supply-requests">
+				<h1>Supply Requests</h1>
+				<div>
+					{store?.supply_requests?.map((request) => {
+						return (
+							<div key={request.id}>
+								<p>Product: {store.products.find((product) => product.id === request.product_id).name}</p>
+								<p>Quantity: {request.quantity}</p>
+								<p>Date: {request.created_at.split('T').join(', ').split('.')[0]}</p>
+								<p>Status: {request.status}</p>
+							</div>
+						);
+					})}
+				</div>
+				<div>
+					<button onClick={() => setIsOpen(!isOpen)}>{isOpen ? 'Close' : 'Add Request'}</button>
+					{
+						<div style={isOpen ? { display: 'block' } : { display: 'none' }}>
+							<Formik
+								initialValues={{ product_name: '', quantity: 1 }}
+								validationSchema={Yup.object({
+									product_name: Yup.string().required('Required'),
+									quantity: Yup.number().moreThan(0).required('Required'),
+								})}
+								onSubmit={(values, { setSubmitting }) => {
+									const product = store?.products?.find((product) => product.name.toLowerCase() === values.product_name.toLowerCase());
+
+									axios
+										.post('/api/supply-requests', {
+											product_name: values.product_name,
+											quantity: values.quantity,
+											store_id: store.id,
+										})
+										.then(() => {
+											setIsOpen(false);
+											setStore((x) => {
+												return {
+													...x,
+													supply_requests: [
+														...x.supply_requests,
+														{
+															id: x.supply_requests.length + 1,
+															product_name: values.product_name,
+															quantity: values.quantity,
+															store_id: store.id,
+															product_id: product.id,
+															status: 'pending',
+                                                            created_at: new Date().toISOString(),
+														},
+													],
+												};
+											});
+										})
+										.catch((err) => {
+											console.log(err);
+										});
+									setSubmitting(false);
+								}}>
+								{() => (
+									<Form>
+										<MySelect name="product_name" label="Product Name">
+											{store.products.map((product) => {
+												return (
+													<option key={product.id} value={product.name}>
+														{product.name}
+													</option>
+												);
+											})}
+										</MySelect>
+										<MyTextInput name="quantity" type="number" label="Quantity" />
+										<button type="submit">Submit</button>
+									</Form>
+								)}
+							</Formik>
+						</div>
+					}
 				</div>
 			</div>
 		</>
