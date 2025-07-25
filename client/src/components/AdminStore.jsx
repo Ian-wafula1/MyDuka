@@ -68,6 +68,29 @@ export default function AdminStore({ store, setStore }) {
         .catch(err => console.log(err))
     }
 
+    function handleSupplyRequest(action) {
+        axios.patch(`/api/supply-requests/${this.id}`, {
+            status: action
+        })
+        .then(() => {
+            setStore(store => {
+                return {
+                    ...store,
+                    supply_requests: store.supply_requests.map(request => {
+                        if (request.id === this.id) {
+                            return {
+                                ...request,
+                                status: action
+                            }
+                        }
+                        return request
+                    })
+                }
+            })
+        })
+        .catch(err => console.log(err))
+    }
+
 	return (
 		<>
 			<div className="card clerks">
@@ -154,8 +177,9 @@ export default function AdminStore({ store, setStore }) {
 									<p>Product: {store.products.find((product) => product.id === request.product_id).name}</p>
 									<p>Quantity: {request.quantity}</p>
 									<p>Date: {request.created_at.split('T').join(', ').split('.')[0]}</p>
-									<button>Approve</button>
-									<button>Deny</button>
+                                    <p>Status: {request.status}</p>
+									<button onClick={() => handleSupplyRequest.call(request, 'approved')}>Approve</button>
+									<button onClick={() => handleSupplyRequest.call(request, 'denied')}>Deny</button>
 								</div>
 							);
 						})}
@@ -169,6 +193,7 @@ export default function AdminStore({ store, setStore }) {
 									<p>Product: {store.products.find((product) => product.id === request.product_id).name}</p>
 									<p>Quantity: {request.quantity}</p>
 									<p>Date: {request.created_at.split('T').join(', ').split('.')[0]}</p>
+                                    <p>Status: {request.status}</p>
 								</div>
 							);
 						})}
@@ -182,6 +207,7 @@ export default function AdminStore({ store, setStore }) {
 									<p>Product: {store.products.find((product) => product.id === request.product_id).name}</p>
 									<p>Quantity: {request.quantity}</p>
 									<p>Date: {request.created_at.split('T').join(', ').split('.')[0]}</p>
+                                    <p>Status: {request.status}</p>
 								</div>
 							);
 						})}
