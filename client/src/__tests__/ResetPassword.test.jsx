@@ -55,6 +55,10 @@ describe('ResetPassword', () => {
 		fireEvent.change(screen.getByLabelText(/New Password/i), {
 			target: { value: 'newsecret123' },
 		});
+
+		fireEvent.change(screen.getByTestId('account-type'), {
+			target: { value: 'clerk' },
+		});
 		fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
 		await waitFor(() =>
@@ -64,6 +68,7 @@ describe('ResetPassword', () => {
 					name: 'John',
 					email: 'john@example.com',
 					newPassword: 'newsecret123',
+					account_type: 'clerk',
 				})
 			)
 		);

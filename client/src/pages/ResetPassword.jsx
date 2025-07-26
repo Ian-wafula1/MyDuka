@@ -44,7 +44,7 @@ export default function ResetPassword() {
 					<div>
 						<MyTextInput label="Name" name="name" type="text" />
 						<MyTextInput label="Email" name="email" type="email" />
-						<MySelect name="account_type">
+						<MySelect data-testid="account-type" name="account_type">
 							<option disabled value="">Select account type</option>
 							<option value="merchant">Merchant</option>
 							<option value="admin">Admin</option>
