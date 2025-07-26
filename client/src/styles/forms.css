@@ -1,0 +1,182 @@
+body {
+	background-color: var(--light-turquoise);
+	/* background: -moz-linear-gradient(-45deg, #f7cac9 0%, #92a8d1 100%);
+	background: #f7cac9;
+	background: -webkit-linear-gradient(-45deg, #f7cac9 0%, #92a8d1 100%);
+	background: linear-gradient(135deg, #f7cac9 0%, #92a8d1 100%) !important; */
+	width: 100%; 
+    min-height: 110vh;
+}
+
+.container:has(.form-container) {
+	display: grid;
+	place-items: center;
+}
+
+.form-container {
+	background-color: #fff;
+	border-radius: 25px;
+	width: 48rem;
+	min-height: 65vh;
+	display: flex;
+	flex-direction: column;
+	gap: 2.4rem;
+	align-items: center;
+	justify-content: space-evenly;
+	padding: 4.7rem 5.4rem;
+	margin-top: 6rem;
+}
+
+.form-container > p {
+	text-align: center;
+	font-size: 1.4rem;
+}
+
+.form-container form input,
+.form-container form select {
+	padding: 0.4rem 1rem;
+	border-radius: 0.6rem;
+	outline: none;
+	border: #1210105f solid 0.1rem;
+	width: 100%;
+    transition: all 0.05s ease-out ;
+}
+
+.form-container form {
+	display: flex;
+	flex-direction: column;
+	width: 90%;
+	gap: 3rem;
+	margin-top: 1.5rem;
+}
+
+.form-container form > div:first-child {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+
+.form-container form > div:last-child {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.form-container .fetch.error {
+	text-align: center;
+}
+
+.form-container form input:hover,
+.form-container form input:focus {
+	border-color: transparent;
+	/* border: none; */
+	outline: 0.15rem solid var(--button-bg);
+}
+
+.input-box {
+	position: relative;
+}
+
+.input-box > label {
+	position: absolute;
+	top: 0.4rem;
+	left: 0.7rem;
+	background-color: #fff;
+	padding: 0 0.5rem;
+	transition: all 0.2s ease-in-out;
+	color: #0b0909a4;
+	cursor: text;
+}
+
+.form-container form input:focus + label,
+.form-container form input:not(:placeholder-shown) + label {
+	font-size: 1.3rem;
+	top: -1.3rem;
+	color: #121010;
+}
+
+.form-container form input:has(~ .error) {
+	border-color: red;
+}
+
+.form-container form input:has(~ .error):hover,
+.form-container form input:has(~ .error):focus {
+	border-color: transparent;
+}
+
+.form-container input.touched:not(:has(~ .error)) {
+	border: transparent;
+	outline: 0.15rem solid green;
+}
+
+.error {
+	color: red;
+}
+
+.form-container > h1 {
+	font-size: 2.8rem;
+	font-weight: bold;
+}
+
+.form-container form button {
+	background-color: var(--button-bg);
+	color: var(--button-color);
+	border: none;
+	outline: none;
+	border-radius: 10rem;
+	padding: 0.8rem 3rem;
+	width: 75%;
+	align-self: center;
+	font-size: 1.8rem;
+	cursor: pointer;
+}
+
+.form-container form button:hover {
+    filter: brightness(0.95);
+}
+
+.form-container form button:active {
+	transform: scale(0.99);
+	filter: brightness(0.85);
+}
+
+.form-container img {
+	position: fixed;
+	width: 100%;
+	height: 50rem;
+	z-index: -1;
+	transform: translate(0, -10%);
+	width: 40rem;
+}
+
+.form-container img:first-of-type {
+	left: 0;
+}
+
+.form-container img:last-of-type {
+	right: 0;
+}
+
+/* media queries */
+
+@media (max-width: 750px) {
+	.form-container img {
+		display: none;
+		/* width: 0; */
+	}
+
+	.form-container {
+		margin: auto;
+		width: 90%;
+		padding: 2rem 4rem;
+		gap: 0rem;
+	}
+
+	.form-container > form {
+		margin: 0;
+	}
+
+	.form-container > h1 {
+		text-align: center;
+	}
+}
