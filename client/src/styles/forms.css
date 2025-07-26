@@ -32,7 +32,8 @@ body {
 	font-size: 1.4rem;
 }
 
-.form-container form input {
+.form-container form input,
+.form-container form select {
 	padding: 0.4rem 1rem;
 	border-radius: 0.6rem;
 	outline: none;

@@ -47,6 +47,7 @@ const Login = () => {
 							<MyTextInput label="Email" name="email" type="email" />
 							<MyTextInput label="Password" name="password" type="password" />
 							<MySelect label="Account Type" name="account_type">
+								<option disabled value="">Select an account type</option>
 								<option value="merchant">Merchant</option>
 								<option value="admin">Admin</option>
 								<option value="clerk">Clerk</option>

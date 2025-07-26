@@ -10,6 +10,7 @@ export default function ClerkStore({ store, setStore }) {
 		products: false,
 		entries: false,
 		supplyRequests: false,
+		transactions: false,
 	});
 	const [searchTerm, setSearchTerm] = useState('');
 	return (
@@ -220,6 +221,68 @@ export default function ClerkStore({ store, setStore }) {
 					}
 				</div>
 			</div>
+			<div className="card transactions">
+				<h1>Transactions</h1>
+				<div>
+					{store?.transactions?.map((transaction) => {
+						return (
+							<div key={transaction.id}>
+								<p>Product: {store.products.find((product) => product.id === transaction.product_id).name}</p>
+								<p>Quantity: {transaction.quantity}</p>
+								<p>Date: {transaction.created_at.split('T').join(', ').split('.')[0]}</p>
+								<p>Unit Price: ${transaction.unit_price}</p>
+								<p>Total: ${transaction.unit_price * transaction.quantity}</p>
+							</div>
+						);
+					})}
+				</div>
+				<div>
+					<button onClick={() => setIsOpen((x) => ({ ...x, transactions: !x.transactions }))}>{isOpen.transactions ? 'Close' : 'Add Transaction'}</button>
+					<div style={isOpen.transactions ? { display: 'block' } : { display: 'none' }}>
+							<Formik
+								initialValues={{ product_name: '', quantity: 1 }}
+								validationSchema={Yup.object({
+									product_name: Yup.string().required('Required'),
+									quantity: Yup.number().moreThan(0).required('Required'),
+								})}
+								onSubmit={(values, { setSubmitting }) => {
+									axios
+										.post('/api/transactions', {
+											product_name: values.product_name,
+											quantity: values.quantity,
+											store_id: store.id,
+										})
+										.then((res) => {
+											setIsOpen((x) => ({ ...x, transactions: false }));
+											setStore((x) => ({
+												...x,
+												transactions: [...x.transactions, res.data],
+											}))
+										})
+										.catch((err) => {
+											console.log(err);
+										});
+									setSubmitting(false);
+								}}>
+								{() => (
+									<Form>
+										<MySelect name="product_name" label="Product Name">
+											{store.products.map((product) => {
+												return (
+													<option key={product.id} value={product.name}>
+														{product.name}
+													</option>
+												);
+											})}
+										</MySelect>
+										<MyTextInput name="quantity" type="number" label="Quantity" />
+										<button type="submit">Submit</button>
+									</Form>
+								)}
+							</Formik>	
+						</div>
+				</div>
+			</div>
 		</>
-	);
+	)
 }

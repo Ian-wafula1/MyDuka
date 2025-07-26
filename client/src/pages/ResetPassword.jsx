@@ -16,7 +16,7 @@ export default function ResetPassword() {
 			<h1>Reset Password</h1>
 			<p>Oopsie! Looks like your password took a vacation. Let’s get you a fresh one.</p>
 			<Formik
-				initialValues={{ name: '', email: '', newPassword: '', account_type: 'merchant' }}
+				initialValues={{ name: '', email: '', newPassword: '', account_type: '' }}
 				validationSchema={Yup.object({
 					name: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
 					email: Yup.string().email('Invalid email address').required('Required'),
@@ -45,6 +45,7 @@ export default function ResetPassword() {
 						<MyTextInput label="Name" name="name" type="text" />
 						<MyTextInput label="Email" name="email" type="email" />
 						<MySelect label="Account type" name="account_type">
+							<option disabled value="">Select account type</option>
 							<option value="merchant">Merchant</option>
 							<option value="admin">Admin</option>
 							<option value="clerk">Clerk</option>
