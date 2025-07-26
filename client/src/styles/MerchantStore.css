@@ -1,0 +1,87 @@
+.store-reports-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.chart-section {
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.chart-section.full-width {
+  grid-column: span 2;
+}
+
+.metrics-section {
+  padding: 15px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.metric-card {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.metric-label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.metric-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.custom-tooltip {
+  background: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.tooltip-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.tooltip-entry {
+  margin: 2px 0;
+}
+
+.period-selector {
+  display: flex;
+  gap: 10px;
+}
+
+.period-btn {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.period-btn.active {
+  background: #8884d8;
+  color: #fff;
+  border-color: #8884d8;
+}
