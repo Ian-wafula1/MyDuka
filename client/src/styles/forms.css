@@ -156,3 +156,27 @@ body {
 .form-container img:last-of-type {
 	right: 0;
 }
+
+/* media queries */
+
+@media (max-width: 750px) {
+	.form-container img {
+		display: none;
+		/* width: 0; */
+	}
+
+	.form-container {
+		margin: auto;
+		width: 90%;
+		padding: 2rem 4rem;
+		gap: 0rem;
+	}
+
+	.form-container > form {
+		margin: 0;
+	}
+
+	.form-container > h1 {
+		text-align: center;
+	}
+}
