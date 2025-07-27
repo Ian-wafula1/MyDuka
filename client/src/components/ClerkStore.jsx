@@ -15,7 +15,7 @@ export default function ClerkStore({ store, setStore }) {
 	const [searchTerm, setSearchTerm] = useState('');
 	return (
 		<>
-			<div className="card products">
+			<div data-testid="products-card" className="card products">
 				<h1>Products</h1>
 				<div className="search">
 					<input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search..." />
@@ -127,7 +127,7 @@ export default function ClerkStore({ store, setStore }) {
 								}}>
 								{({ values }) => (
 									<Form>
-										<MySelect name="product_name" label="Product Name">
+										<MySelect data-testid="product-select" name="product_name" label="Product Name">
 											{store.products.map((product) => {
 												return (
 													<option key={product.id} value={product.name}>
@@ -136,11 +136,11 @@ export default function ClerkStore({ store, setStore }) {
 												);
 											})}
 										</MySelect>
-										<MySelect name="payment_status" label="Payment Status">
+										<MySelect data-testid="payment-select" name="payment_status" label="Payment Status">
 											<option value="pending">Pending</option>
 											<option value="paid">Paid</option>
 										</MySelect>
-										<MyTextInput name="quantity" type="number" label="Quantity" />
+										<MyTextInput data-testid="quantity-input" name="quantity" type="number" label="Quantity" />
 										<div className="total_sum">
 											Total Sum:{' '}
 											<span>
@@ -150,7 +150,7 @@ export default function ClerkStore({ store, setStore }) {
 												})()}
 											</span>
 										</div>
-										<button type="submit">Submit</button>
+										<button data-testid="submit-entry" type="submit">Submit</button>
 									</Form>
 								)}
 							</Formik>

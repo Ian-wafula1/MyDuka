@@ -30,7 +30,7 @@ const MySelect = ({ label, ...props }) => {
 	return (
 		<div>
 			<label htmlFor={props.id || props.name}>{label}</label>
-			<select {...field} {...props} />
+			<select id={props.id || props.name} {...field} {...props} />
 			{meta.touched && meta.error ? <div className="error">{meta.error}</div> : null}
 		</div>
 	);

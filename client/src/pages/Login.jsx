@@ -33,7 +33,7 @@ const Login = () => {
 						.then((res) => {
 							localStorage.setItem('token', res.data.token);
 							setCurrentUser(res.data.user_dict);
-							navigate('/');
+							navigate('/dashboard');
 						})
 						.catch((err) => {
 							console.log(err);
