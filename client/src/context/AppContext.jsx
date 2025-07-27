@@ -1,11 +1,11 @@
 import { createContext } from 'react';
 import { useState } from 'react';
-import {clerkObj} from '../utils/userObjects';
+import { merchantObj, clerkObj } from '../utils/userObjects';
 
 const AppContext = createContext();
 
 function AppProvider({ children }) {
-    const [currentUser, setCurrentUser] = useState(clerkObj);
+	const [currentUser, setCurrentUser] = useState(merchantObj);
 	return <AppContext.Provider value={{ currentUser, setCurrentUser }}>{children}</AppContext.Provider>;
 }
 
