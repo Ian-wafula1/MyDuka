@@ -1,5 +1,6 @@
 from flask import send_from_directory
-from config import app, api
+from config import app
+from apis import api
 from flask_restx import Resource
 from models import *
 
@@ -13,10 +14,5 @@ def catch_all(path):
 def not_found(e):
     return send_from_directory(app.static_folder, 'index.html')
 
-@api.route('/api/test')
-class Test(Resource):
-    def get(self):
-        return {'test': 'test'}
-
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, port=5555)
