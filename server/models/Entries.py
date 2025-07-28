@@ -8,7 +8,7 @@ class Entry(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer, nullable=False)  # Positive (add stock) / Negative (remove/spoilage)
-    payment_status = db.Column(db.String(20), default='unpaid')  # 'paid', 'unpaid', 'partial'
+    payment_status = db.Column(db.String(20), nullable=False, default='pending') 
     total_sum = db.Column(db.Float, nullable=False) 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)

@@ -1,6 +1,7 @@
 from config import db
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import func
+from sqlalchemy.orm import validates
 
 class Transaction(db.Model, SerializerMixin):
     __tablename__ = 'transactions'
@@ -15,3 +16,9 @@ class Transaction(db.Model, SerializerMixin):
     product = db.relationship('Product', back_populates='transactions')
     
     serialize_rules = ('-product',)
+    
+    @validates('quantity')
+    def validate_quantity(self, key, quantity):
+        if not quantity or quantity <= 0:
+            raise ValueError("Quantity must be greater than 0")
+        return quantity

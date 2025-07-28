@@ -3,6 +3,7 @@ from config import db, bcrypt
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy import func
+from sqlalchemy.orm import validates
 
 class Merchant(db.Model, SerializerMixin):
     __tablename__ = 'merchants'
@@ -28,3 +29,15 @@ class Merchant(db.Model, SerializerMixin):
         
     def authenticate(self, password):
         return bcrypt.check_password_hash(self.password_hash, password.encode('utf-8'))
+    
+    @validates('name')
+    def validate_name(self, key, name):
+        if len(name) < 3:
+            raise ValueError('Name must be at least 3 characters long')
+        return name
+    
+    @validates('email')
+    def validate_email(self, key, email):
+        if not email:
+            raise ValueError('Email is required')
+        return email

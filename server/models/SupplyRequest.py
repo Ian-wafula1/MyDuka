@@ -1,8 +1,9 @@
 from config import db
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import func
+from sqlalchemy.orm import validates
 
-class Supply_Request(db.Model, SerializerMixin):
+class SupplyRequest(db.Model, SerializerMixin):
     
     __tablename__ = 'supply_requests'
     
@@ -20,3 +21,9 @@ class Supply_Request(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='supply_requests')
     
     serialize_rules = ('-store', '-user', '-product')
+    
+    @validates('quantity')
+    def validate_quantity(self, key, quantity):
+        if not quantity or quantity < 1:
+            raise ValueError('Quantity must be at least 1')
+        return quantity
