@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
-from app import db
+from server.models import db
 
 class Entry(db.Model):
     __tablename__ = 'entries'

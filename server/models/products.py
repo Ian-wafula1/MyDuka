@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy.ext.hybrid import hybrid_property
-from app import db
+from server.models import db
 
 class Product(db.Model):
     __tablename__ = 'products'
