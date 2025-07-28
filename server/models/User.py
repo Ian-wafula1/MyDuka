@@ -2,6 +2,7 @@ from config import db, bcrypt
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy import func
+from .user_stores import user_stores
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
@@ -19,9 +20,9 @@ class User(db.Model, SerializerMixin):
     
     merchant = db.relationship('Merchant', back_populates='users')
     supply_requests = db.relationship('Supply_Request', back_populates='user')
-    store = db.relationship('Store', back_populates='users')
+    stores = db.relationship('Store', back_populates='users', secondary=user_stores)
     
-    serialize_rules = ('-merchant', '-supply_requests', '-store')
+    serialize_rules = ('-merchant', '-supply_requests', '-stores')
     
     @hybrid_property
     def password_hash(self):
