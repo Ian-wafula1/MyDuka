@@ -21,11 +21,8 @@ class Login(Resource):
             if account_type == 'merchant':
                 user = Merchant.query.filter_by(email=request.json['email']).first()
                 
-            elif account_type == 'admin':
-                user = User.query.filter_by(email=request.json['email'], account_type='admin').first()
-            
-            elif account_type == 'clerk':
-                user = User.query.filter_by(email=request.json['email'], account_type='clerk').first()
+            elif account_type in ('clerk', 'admin'):
+                user = User.query.filter_by(email=request.json['email'], account_type=account_type).first()
             else:
                 return make_response({'error': 'Invalid account type'}, 400)
             
@@ -33,6 +30,8 @@ class Login(Resource):
                 return make_response({'error': 'User not found'}, 404)
             if not user.authenticate(request.json['password']):
                 return make_response({'error': 'Invalid password'}, 401)
+            if account_type in ('clerk', 'admin') and not user.is_active:
+                return make_response({'error': 'User account is disabled'}, 401)
             access_token = create_access_token(identity={
                 'id': user.id,
                 'account_type': account_type
