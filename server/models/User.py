@@ -14,7 +14,6 @@ class User(db.Model, SerializerMixin):
     account_status = db.Column(db.String, nullable=False, default='active')
     email = db.Column(db.String, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
-    store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
     merchant_id = db.Column(db.Integer, db.ForeignKey('merchants.id'))
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, onupdate=func.now())
@@ -38,7 +37,7 @@ class User(db.Model, SerializerMixin):
     
     @validates('name')
     def validate_name(self, key, name):
-        if not name or len(name) < 3 or not name.isalpha():
+        if not name or len(name) < 3:
             raise ValueError('Name must be at least 3 characters long')
         return name
     

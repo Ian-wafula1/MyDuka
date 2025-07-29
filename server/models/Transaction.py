@@ -12,8 +12,10 @@ class Transaction(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, onupdate=func.now())
     unit_price = db.Column(db.Float, nullable=False, default=1.00)
+    store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
     
     product = db.relationship('Product', back_populates='transactions')
+    store = db.relationship('Store', back_populates='transactions')
     
     serialize_rules = ('-product',)
     

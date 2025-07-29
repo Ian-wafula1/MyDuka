@@ -11,7 +11,6 @@ class Store(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     location = db.Column(db.String(200), nullable=False)
-    is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
@@ -24,6 +23,7 @@ class Store(db.Model, SerializerMixin):
     supply_requests = db.relationship('SupplyRequest', back_populates='store')
     users = db.relationship('User', back_populates='stores', secondary=user_stores)
     entries = db.relationship('Entry', back_populates='store')
+    transactions = db.relationship('Transaction', back_populates='store')
     
     serialize_rules = ('-merchant', '-products', '-supply_requests', '-users', '-entries')
 
