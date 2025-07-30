@@ -3,7 +3,8 @@ import { Field, Form, Formik } from 'formik';
 import { MySelect, MyTextInput } from '../utils/formElements';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import {AppContext} from '../context/AppContext'
 
 export default function ClerkStore({ store, setStore }) {
 	const [isOpen, setIsOpen] = useState({
@@ -13,6 +14,7 @@ export default function ClerkStore({ store, setStore }) {
 		transactions: false,
 	});
 	const [searchTerm, setSearchTerm] = useState('');
+	const {currentUser} = useContext(AppContext)
 	return (
 		<>
 			<div data-testid="products-card" className="card products">
@@ -56,7 +58,10 @@ export default function ClerkStore({ store, setStore }) {
 							})}
 							onSubmit={(values) => {
 								axios
-									.post('http://localhost:5000/products', values)
+									.post('/api/products', {
+										...values,
+										store_id: store?.id,
+									})
 									.then((res) => {
 										setStore((x) => ({ ...x, products: [...x.products, res?.data] }));
 										setIsOpen((x) => ({ ...x, products: false }));
@@ -110,11 +115,12 @@ export default function ClerkStore({ store, setStore }) {
 
 									axios
 										.post('/api/entries', {
+											product_id: product.id,
 											product_name: values.product_name,
 											quantity: values.quantity,
 											payment_status: values.payment_status,
 											total_sum: values.quantity * product.buying_price,
-											store_id: store.id,
+											store_id: store?.id,
 										})
 										.then((res) => {
 											setIsOpen((x) => ({ ...x, entries: false }));
@@ -188,6 +194,8 @@ export default function ClerkStore({ store, setStore }) {
 											product_name: values.product_name,
 											quantity: values.quantity,
 											store_id: store.id,
+											product_id: store.products.find((product) => product.name.toLowerCase() === values.product_name.toLowerCase()).id,
+											user_id: currentUser?.id
 										})
 										.then((res) => {
 											setIsOpen((x) => ({ ...x, supplyRequests: false }));
@@ -251,6 +259,7 @@ export default function ClerkStore({ store, setStore }) {
 											product_name: values.product_name,
 											quantity: values.quantity,
 											store_id: store.id,
+											product_id: store.products.find((product) => product.name.toLowerCase() === values.product_name.toLowerCase()).id
 										})
 										.then((res) => {
 											setIsOpen((x) => ({ ...x, transactions: false }));

@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import pic1 from '../assets/pic1.svg';
 import pic2 from '../assets/pic2.svg';
+import '../styles/forms.css';
 
 export default function Signup() {
 	const navigate = useNavigate();

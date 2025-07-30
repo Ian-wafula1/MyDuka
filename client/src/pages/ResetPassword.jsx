@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import pic1 from '../assets/pic1.svg';
 import pic2 from '../assets/pic2.svg';
 import { useState } from 'react';
+import '../styles/forms.css';
 
 export default function ResetPassword() {
 	const navigate = useNavigate();

@@ -14,7 +14,7 @@ class StoreByID(Resource):
             store = Store.query.filter_by(id=id).first()
             if not store:
                 return make_response({'error': 'Store not found'}, 404)
-            return make_response({'store': store.to_dict()}, 200)
+            return make_response(store.to_dict(), 200)
         except Exception as e:
             return make_response({'error': str(e)}, 500)
         

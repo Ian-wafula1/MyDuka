@@ -6,6 +6,7 @@ import ProductsCard from './ProductsCard';
 import axios from 'axios';
 
 export default function MerchantStore({ store, setStore }) {
+	console.log(store);
 	const [isOpen, setIsOpen] = useState({
 		admins: false,
 		reports: false,
@@ -28,7 +29,7 @@ export default function MerchantStore({ store, setStore }) {
 		}
 
 		axios
-			.delete(`/api/users/admin/${admin.id}`)
+			.delete(`/api/admins/${admin.id}`)
 			.then(() => {
 				setStore((store) => ({
 					...store,
@@ -45,8 +46,8 @@ export default function MerchantStore({ store, setStore }) {
 	// Function to change admin account status
 	const changeAdminStatus = (admin) => {
 		axios
-			.patch(`/api/users/admin/${admin.id}`, {
-				account_status: admin.account_status === 'active' ? 'inactive' : 'active',
+			.patch(`/api/admins/${admin.id}`, {
+				account_status: admin.account_status === 'active' ? 'disabled' : 'active',
 			})
 			.then(() => {
 				setStore((store) => ({
@@ -55,7 +56,7 @@ export default function MerchantStore({ store, setStore }) {
 						if (user.id === admin.id) {
 							return {
 								...user,
-								account_status: user.account_status === 'active' ? 'inactive' : 'active',
+								account_status: user.account_status === 'active' ? 'disabled' : 'active',
 							};
 						}
 						return user;
@@ -105,7 +106,7 @@ export default function MerchantStore({ store, setStore }) {
 			{/* Store Header */}
 			<div className="merchant-store__header">
 				<div className="store-info">
-					<h1 className="store-name">{store?.name}</h1>
+					<h1 className="store-name">{store?.name || 'Unlisted'}</h1>
 					<p className="store-location">📍 {store?.location}</p>
 					<div className="store-stats">
 						<div className="stat-item">
@@ -191,6 +192,7 @@ export default function MerchantStore({ store, setStore }) {
 										password: values.password,
 										account_type: values.account_type,
 										store_id: store.id,
+										merchant_id: store.merchant_id,
 									})
 									.then((res) => {
 										setIsOpen((prev) => ({ ...prev, admins: false }));

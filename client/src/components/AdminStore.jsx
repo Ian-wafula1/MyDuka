@@ -10,7 +10,7 @@ export default function AdminStore({ store, setStore }) {
 
 	function removeClerk() {
 		axios
-			.delete(`/api/users/clerk/${this.id}`)
+			.delete(`/api/clerks/${this.id}`)
 			.then(() => {
 				setStore((store) => {
 					return {
@@ -25,8 +25,8 @@ export default function AdminStore({ store, setStore }) {
 
 	function changeAccountStatus() {
 		axios
-			.patch(`/api/users/clerk/${this.id}`, {
-				account_status: this?.account_status === 'active' ? 'inactive' : 'active',
+			.patch(`/api/clerks/${this.id}`, {
+				account_status: this?.account_status === 'active' ? 'disabled' : 'active',
 			})
 			.then(() => {
 				setStore((store) => {
@@ -36,7 +36,7 @@ export default function AdminStore({ store, setStore }) {
 							if (user?.id === this?.id) {
 								return {
 									...user,
-									account_status: user?.account_status === 'active' ? 'inactive' : 'active',
+									account_status: user?.account_status === 'active' ? 'disabled' : 'active',
 								};
 							}
 							return user;
@@ -132,6 +132,8 @@ export default function AdminStore({ store, setStore }) {
 										email: values.email,
 										password: values.password,
 										account_type: values.account_type,
+										merchant_id: store.merchant_id,
+										store_id: store.id,
 									})
 									.then((res) => {
 										setIsOpen(false);

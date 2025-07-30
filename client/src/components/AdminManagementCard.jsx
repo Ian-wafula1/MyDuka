@@ -62,7 +62,7 @@ const AdminManagementCard = ({ admins, showInviteForm, setShowInviteForm, onInvi
 					<h3>Current Admins ({admins.length})</h3>
 					<div className="admin-stats">
 						<span className="stat-item">Active: {admins.filter((a) => a.account_status === 'active').length}</span>
-						<span className="stat-item">Inactive: {admins.filter((a) => a.account_status === 'inactive').length}</span>
+						<span className="stat-item">Disabled: {admins.filter((a) => a.account_status === 'disabled').length}</span>
 					</div>
 				</div>
 
@@ -147,7 +147,7 @@ const AdminManagementCard = ({ admins, showInviteForm, setShowInviteForm, onInvi
 
 								{/* Admin Actions */}
 								<div className="admin-actions">
-									<button className={`btn-status ${admin.account_status === 'active' ? 'btn-deactivate' : 'btn-activate'}`} onClick={() => onStatusChange(admin.id, admin.account_status === 'active' ? 'inactive' : 'active')}>
+									<button className={`btn-status ${admin.account_status === 'active' ? 'btn-deactivate' : 'btn-activate'}`} onClick={() => onStatusChange(admin.id, admin.account_status === 'active' ? 'disabled' : 'active')}>
 										{admin.account_status === 'active' ? '⏸️ Deactivate' : '▶️ Activate'}
 									</button>
 

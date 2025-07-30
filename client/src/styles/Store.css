@@ -2,8 +2,9 @@
 .store-page {
   display: flex;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  /* background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
 }
 
 .store-content {
@@ -343,19 +344,19 @@
 }
 
 /* Form Styles */
-.form-container form {
+.store-page .form-container form {
   background: #f8f9fa;
   padding: 2rem;
   border-radius: 1.5rem;
   margin-top: 2rem;
 }
 
-.form-container form .input-box {
+.store-page .form-container form .input-box {
   margin-bottom: 2rem;
 }
 
-.form-container form input,
-.form-container form select {
+.store-page .form-container form input,
+.store-page .form-container form select {
   width: 100%;
   padding: 1rem 1.5rem;
   border: 2px solid #e9ecef;
@@ -364,8 +365,8 @@
   transition: all 0.3s ease;
 }
 
-.form-container form input:focus,
-.form-container form select:focus {
+.store-page .form-container form input:focus,
+.store-page .form-container form select:focus {
   outline: none;
   border-color: var(--button-bg);
   box-shadow: 0 0 0 0.3rem rgba(var(--button-bg-rgb), 0.25);

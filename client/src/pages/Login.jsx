@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { MyTextInput, MySelect } from '../utils/formElements';
 import { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
+import '../styles/forms.css';
 
 const Login = () => {
 	const navigate = useNavigate();

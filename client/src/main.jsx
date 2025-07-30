@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import './styles/reset/modern-normalize.css';
 import './styles/reset/custom-reset.css';
 import './index.css';
-import './styles/forms.css';
 import { AppProvider } from './context/AppContext.jsx';
 import { MerchantStoreProvider } from './context/MerchantStoreContext.jsx';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';

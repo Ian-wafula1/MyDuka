@@ -25,7 +25,7 @@ const mockAdmins = [
 		id: 2,
 		name: 'Jane Manager',
 		email: 'jane@admin.com',
-		account_status: 'inactive',
+		account_status: 'disabled',
 		store_id: 1,
 		created_at: '2024-02-10T00:00:00Z',
 		last_login: '2024-07-15T14:30:00Z',
