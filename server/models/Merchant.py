@@ -17,7 +17,7 @@ class Merchant(db.Model, SerializerMixin):
     users = db.relationship('User', back_populates='merchant')
     stores = db.relationship('Store', back_populates='merchant')
     
-    serialize_rules = ('-users', '-stores')
+    serialize_rules = ('-users', '-stores.merchant')
     
     @hybrid_property
     def password_hash(self):

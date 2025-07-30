@@ -11,7 +11,7 @@ reg = Namespace('registration', description='Registration operations', path='/ap
 @reg.route('/login')
 class Login(Resource):
     def post(self):
-        try: 
+        # try: 
             data = request.json
             if not data or 'email' not in data or 'password' not in data:
                 return make_response({'error': 'Missing email or password'}, 400)
@@ -37,8 +37,8 @@ class Login(Resource):
                 'account_type': account_type
             }, expires_delta=datetime.timedelta(days=7))
             return {'access_token': access_token, 'user_dict': user.to_dict()}
-        except Exception as e:
-            return make_response({'error': str(e)}, 500)
+        # except Exception as e:
+        #     return make_response({'error': str(e)}, 500)
 
 @reg.route('/signup')
 class Signup(Resource):
@@ -65,7 +65,7 @@ class ResetPassword(Resource):
     def post(self):
         try:
             data = request.json
-            if not data or 'email' not in data or 'password' not in data:
+            if not data or 'email' not in data or 'newPassword' not in data:
                 return make_response({'error': 'Missing email or password'}, 400)
             
             if (account_type := data['account_type']) == 'merchant':
@@ -77,7 +77,7 @@ class ResetPassword(Resource):
                 
             if not user:
                 return make_response({'error': 'Merchant not found'}, 404)
-            user.password_hash = data.get('password')
+            user.password_hash = data.get('newPassword')
             db.session.add(user)
             db.session.commit()
             
@@ -129,7 +129,7 @@ class SendInvite(Resource):
 class Me(Resource):
     @jwt_required()
     def get(self):
-        try:
+        # try:
             data = get_jwt_identity()
             if (account_type := data['account_type']) == 'merchant':
                 user = Merchant.query.filter_by(id=data['id']).first()
@@ -138,9 +138,11 @@ class Me(Resource):
             else:
                 return make_response({'error': 'Invalid account type'}, 400)
             
-            make_response({
-                'account_type': account_type, 'user_dict': user.to_dict()}
-                        , 200)
+            # stores = [store.to_dict() for store in user.stores]
             
-        except Exception as e:
-            return make_response({'error': str(e)}, 500)
+            return make_response({
+                'account_type': account_type, 'user_dict': user.to_dict()}, 200)
+            
+        # except Exception as e:
+        #     print(e)
+        #     return make_response({'error': str(e)}, 500)

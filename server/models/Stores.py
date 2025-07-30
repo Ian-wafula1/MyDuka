@@ -25,8 +25,8 @@ class Store(db.Model, SerializerMixin):
     entries = db.relationship('Entry', back_populates='store')
     transactions = db.relationship('Transaction', back_populates='store')
     
-    serialize_rules = ('-merchant', '-products', '-supply_requests', '-users', '-entries')
-
+    serialize_rules = ('-merchant.stores', '-products.store', '-supply_requests.store', '-users.stores', '-entries.store', '-transactions.store')
+    # Ok - users
     # Hybrid property to get merchant's name
     @hybrid_property
     def merchant_name(self):

@@ -31,8 +31,13 @@ const Login = () => {
 							account_type: values.account_type,
 						})
 						.then((res) => {
-							localStorage.setItem('token', res.data.token);
-							setCurrentUser(res.data.user_dict);
+							localStorage.setItem('token', res.data.access_token);
+							let user = res.data.user_dict
+							user = {
+								...user,
+								account_type: res.data.account_type
+							}
+							setCurrentUser(user);
 							navigate('/dashboard');
 						})
 						.catch((err) => {

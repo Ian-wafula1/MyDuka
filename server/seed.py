@@ -24,7 +24,7 @@ with app.app_context():
     
     test_merchant = Merchant(
         name='test_Merchant',
-        email='test_Merchant@gmail.com'
+        email='test_merchant@gmail.com'
     )
     test_merchant.password_hash = 'testing123'
     

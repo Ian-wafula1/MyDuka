@@ -20,7 +20,7 @@ class SupplyRequest(db.Model, SerializerMixin):
     product = db.relationship('Product', back_populates='supply_requests')
     user = db.relationship('User', back_populates='supply_requests')
     
-    serialize_rules = ('-store', '-user', '-product')
+    serialize_rules = ('-store', '-user.supply_requests', '-product.supply_requests')
     
     @validates('quantity')
     def validate_quantity(self, key, quantity):
