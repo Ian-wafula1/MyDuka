@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { MyTextInput } from '../utils/formElements';
 import ProductsCard from './ProductsCard';
 import axios from 'axios';
+import './MerchantStore.css';
 
 export default function MerchantStore({ store, setStore }) {
   const [isOpen, setIsOpen] = useState({

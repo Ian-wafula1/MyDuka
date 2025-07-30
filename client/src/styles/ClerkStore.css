@@ -1,0 +1,533 @@
+/* ClerkStore.css */
+
+/* Main Container */
+.clerk-store-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Card Base Styles */
+.card {
+  background: white;
+  border-radius: 2rem;
+  padding: 3rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  animation: cardSlide 0.8s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 0.4rem;
+  background: linear-gradient(90deg, var(--button-bg), #2ecc71, #e74c3c);
+  transition: left 0.5s ease;
+}
+
+.card:hover::before {
+  left: 0;
+}
+
+.card:hover {
+  transform: translateY(-0.5rem);
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.15);
+}
+
+/* Card Headers */
+.card h1 {
+  font-size: 2.8rem;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Products Card Specific */
+.products {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.products h1 {
+  color: white;
+}
+
+/* Search Section */
+.search {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.search input {
+  flex: 1;
+  padding: 1.2rem 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.search input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.8);
+  background: white;
+  box-shadow: 0 0 0 0.3rem rgba(255, 255, 255, 0.25);
+}
+
+.search input::placeholder {
+  color: #666;
+}
+
+.search button {
+  padding: 1.2rem 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.search button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Product Items */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.product-item {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  animation: featureSlide 0.8s ease-out;
+}
+
+.product-item:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.product-item p {
+  margin-bottom: 0.8rem;
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.product-item strong {
+  color: white;
+}
+
+/* Entries Card */
+.entries {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.entries h1 {
+  color: white;
+}
+
+.entry-item {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  animation: valueSlide 0.8s ease-out;
+}
+
+.entry-item:hover {
+  transform: translateX(1rem);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.entry-item p {
+  margin-bottom: 0.8rem;
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.entry-item strong {
+  color: white;
+}
+
+/* Supply Requests Card */
+.supply-requests {
+  background: linear-gradient(135deg, #8884d8 0%, #82ca9d 100%);
+  color: white;
+}
+
+.supply-requests h1 {
+  color: white;
+}
+
+.request-item {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  animation: featureSlide 0.8s ease-out;
+}
+
+.request-item:hover {
+  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.request-item p {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.request-item strong {
+  color: white;
+}
+
+/* Transactions Card */
+.transactions {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+  color: #2c3e50;
+}
+
+.transactions h1 {
+  color: #2c3e50;
+}
+
+.transaction-item {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+  animation: valueSlide 0.8s ease-out;
+}
+
+.transaction-item:hover {
+  transform: translateY(-0.5rem);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+}
+
+.transaction-item p {
+  margin-bottom: 0.8rem;
+  font-size: 1.4rem;
+  color: #2c3e50;
+}
+
+.transaction-item strong {
+  color: var(--button-bg);
+}
+
+/* Toggle Buttons */
+.toggle-button {
+  width: 100%;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+.toggle-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-0.2rem);
+}
+
+.toggle-button:active {
+  transform: scale(0.98);
+}
+
+/* Form Sections */
+.form-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: slideDown 0.3s ease-out;
+}
+
+.form-section input,
+.form-section select {
+  width: 100%;
+  padding: 1.2rem 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  background: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.form-section input:focus,
+.form-section select:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.8);
+  background: white;
+  box-shadow: 0 0 0 0.3rem rgba(255, 255, 255, 0.25);
+}
+
+.form-section button[type="submit"] {
+  width: 100%;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.8rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.form-section button[type="submit"]:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Total Sum Display */
+.total_sum {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 1rem 1.5rem;
+  border-radius: 0.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.total_sum span {
+  color: #fff;
+  font-size: 1.8rem;
+  margin-left: 0.5rem;
+}
+
+/* Status Badges */
+.status {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+}
+
+.status.pending {
+  background: rgba(255, 243, 205, 0.9);
+  color: #856404;
+}
+
+.status.paid {
+  background: rgba(209, 236, 241, 0.9);
+  color: #0c5460;
+}
+
+.status.approved {
+  background: rgba(212, 237, 218, 0.9);
+  color: #155724;
+}
+
+.status.denied {
+  background: rgba(248, 215, 218, 0.9);
+  color: #721c24;
+}
+
+/* Empty States */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.empty-state .icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.empty-state p {
+  font-size: 1.4rem;
+  line-height: 1.6;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cardSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes featureSlide {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes valueSlide {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .clerk-store-container {
+    padding: 1.5rem;
+  }
+  
+  .card {
+    padding: 2rem;
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .clerk-store-container {
+    padding: 1rem;
+  }
+  
+  .card {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .card h1 {
+    font-size: 2.4rem;
+  }
+  
+  .search {
+    flex-direction: column;
+  }
+  
+  .search input,
+  .search button {
+    width: 100%;
+  }
+  
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .product-item,
+  .entry-item,
+  .request-item,
+  .transaction-item {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .card {
+    padding: 1rem;
+  }
+  
+  .card h1 {
+    font-size: 2rem;
+  }
+  
+  .product-item p,
+  .entry-item p,
+  .request-item p,
+  .transaction-item p {
+    font-size: 1.3rem;
+  }
+}
+
+/* CSS Variables (add to your root styles) */
+:root {
+  --button-bg: #5127b4;
+  --button-bg-rgb: 81, 39, 180;
+  --button-color: #ffffff;
+}
