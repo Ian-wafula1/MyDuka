@@ -23,8 +23,8 @@ export default function ClerkStore({ store, setStore }) {
 				</div>
 				<div>
 					{store?.products
-						?.filter((product) => product.name.toLowerCase().includes(searchTerm.toLowerCase()))
-						.map((product) => {
+						?.filter((product) => product?.name.toLowerCase().includes(searchTerm.toLowerCase()))
+						?.map((product) => {
 							return (
 								<div key={product.id}>
 									<p>{product.name}</p>
@@ -58,7 +58,7 @@ export default function ClerkStore({ store, setStore }) {
 								axios
 									.post('http://localhost:5000/products', values)
 									.then((res) => {
-										setStore((x) => ({ ...x, products: [...x.products, res.data] }));
+										setStore((x) => ({ ...x, products: [...x.products, res?.data] }));
 										setIsOpen((x) => ({ ...x, products: false }));
 									})
 									.catch((err) => {
@@ -82,10 +82,10 @@ export default function ClerkStore({ store, setStore }) {
 				<div>
 					{store?.entries
 						?.sort((a) => (a.payment_status !== 'pending' ? 1 : -1))
-						.map((entry) => {
+						?.map((entry) => {
 							return (
 								<div key={entry.id}>
-									<p>Product: {store.products.find((product) => product.id === entry.product_id).name}</p>
+									<p>Product: {store?.products?.find((product) => product.id === entry.product_id).name}</p>
 									<p>Quantity: {entry.quantity}</p>
 									<p>Status: {entry.payment_status}</p>
 									<p>Total: {entry.total_sum}</p>
@@ -128,7 +128,7 @@ export default function ClerkStore({ store, setStore }) {
 								{({ values }) => (
 									<Form>
 										<MySelect data-testid="product-select" name="product_name" label="Product Name">
-											{store.products.map((product) => {
+											{store?.products.map((product) => {
 												return (
 													<option key={product.id} value={product.name}>
 														{product.name}

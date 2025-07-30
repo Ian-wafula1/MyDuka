@@ -22,7 +22,7 @@ class User(db.Model, SerializerMixin):
     supply_requests = db.relationship('SupplyRequest', back_populates='user')
     stores = db.relationship('Store', back_populates='users', secondary=user_stores)
     
-    serialize_rules = ('-merchant', '-supply_requests', '-stores')
+    serialize_rules = ('-merchant', '-supply_requests', '-stores.users')
     
     @hybrid_property
     def password_hash(self):

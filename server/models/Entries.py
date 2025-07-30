@@ -21,7 +21,7 @@ class Entry(db.Model, SerializerMixin):
     store = db.relationship('Store', back_populates='entries')
     product = db.relationship('Product', back_populates='entries')
     
-    serialize_rules = ('-store', '-product.entries')
+    serialize_rules = ('-store', '-product')
 
     def __repr__(self):
         return f'<Entry {self.id} (Product: {self.product_id}, Qty: {self.quantity})>'

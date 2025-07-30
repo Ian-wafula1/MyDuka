@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import '../styles/sidebar.css';
 
-export default function Sidebar({ handleUrlChange }) {
+export default function Sidebar() {
 	const { currentUser: user } = useContext(AppContext);
 	const [isOpen, setIsOpen] = useState(false);
 	// https://ui-avatars.com/api/?name=${user?.name?.at(0)}&format=svg
@@ -94,7 +94,7 @@ export default function Sidebar({ handleUrlChange }) {
 						<div style={isOpen ? { display: 'flex' } : { display: 'none' }} className="dropdown-content">
 							{user?.stores?.map((store) => {
 								return (
-									<NavLink onClick={() => handleUrlChange(store.id)} key={store.id} to={`/store/${store.id}`}>
+									<NavLink key={store.id} to={`/store/${store.id}`}>
 										{store.name}
 									</NavLink>
 								);

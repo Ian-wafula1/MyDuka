@@ -143,7 +143,7 @@ const merchantObj = {
 				{
 					id: 5,
 					quantity: 10,
-					status: 'denied',
+					status: 'declined',
 					store_id: 12,
 					created_at: '2022-06-22T00:00:00.000Z',
 					user_id: 1,
@@ -152,7 +152,7 @@ const merchantObj = {
 				{
 					id: 6,
 					quantity: 10,
-					status: 'denied',
+					status: 'declined',
 					store_id: 12,
 					created_at: '2022-06-22T00:00:00.000Z',
 					user_id: 1,
@@ -292,7 +292,7 @@ const merchantObj = {
 				{
 					id: 2,
 					quantity: 10,
-					status: 'denied',
+					status: 'declined',
 					store_id: 13,
 					created_at: '2022-06-22T00:00:00.000Z',
 					user_id: 1,
@@ -524,7 +524,7 @@ const clerkObj = {
 				{
 					id: 5,
 					quantity: 10,
-					status: 'denied',
+					status: 'declined',
 					store_id: 12,
 					created_at: '2022-06-22T00:00:00.000Z',
 					user_id: 1,
@@ -533,7 +533,7 @@ const clerkObj = {
 				{
 					id: 6,
 					quantity: 10,
-					status: 'denied',
+					status: 'declined',
 					store_id: 12,
 					created_at: '2022-06-22T00:00:00.000Z',
 					user_id: 1,
@@ -673,7 +673,7 @@ const clerkObj = {
 				{
 					id: 2,
 					quantity: 10,
-					status: 'denied',
+					status: 'declined',
 					store_id: 13,
 					created_at: '2022-06-22T00:00:00.000Z',
 					user_id: 1,
@@ -913,7 +913,7 @@ const adminObj = {
 				{
 					id: 5,
 					quantity: 10,
-					status: 'denied',
+					status: 'declined',
 					store_id: 12,
 					created_at: '2022-06-22T00:00:00.000Z',
 					user_id: 1,
@@ -922,7 +922,7 @@ const adminObj = {
 				{
 					id: 6,
 					quantity: 10,
-					status: 'denied',
+					status: 'declined',
 					store_id: 12,
 					created_at: '2022-06-22T00:00:00.000Z',
 					user_id: 1,
@@ -1062,7 +1062,7 @@ const adminObj = {
 				{
 					id: 2,
 					quantity: 10,
-					status: 'denied',
+					status: 'declined',
 					store_id: 13,
 					created_at: '2022-06-22T00:00:00.000Z',
 					user_id: 1,

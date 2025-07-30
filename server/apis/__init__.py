@@ -1,6 +1,7 @@
 from config import app
-from .registration import reg
 from flask_restx import Api
+from .registration import reg
+from .stores import stores
 
 api = Api(app,
           title='MyDuka API',
@@ -9,3 +10,4 @@ api = Api(app,
 
 
 api.add_namespace(reg)
+api.add_namespace(stores)

@@ -27,7 +27,7 @@ class Product(db.Model, SerializerMixin):
     supply_requests = db.relationship('SupplyRequest', back_populates='product')
     entries = db.relationship('Entry', back_populates='product')
     
-    serialize_rules = ('-store', '-transactions.product', '-supply_requests.product', '-entries.product')
+    serialize_rules = ('-store', '-transactions', '-supply_requests', '-entries')
 
     # Hybrid property to get the store's name (no database column)
     @hybrid_property

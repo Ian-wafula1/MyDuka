@@ -17,7 +17,7 @@ class Transaction(db.Model, SerializerMixin):
     product = db.relationship('Product', back_populates='transactions')
     store = db.relationship('Store', back_populates='transactions')
     
-    serialize_rules = ('-product.transactions', '-store')
+    serialize_rules = ('-product', '-store')
     
     @validates('quantity')
     def validate_quantity(self, key, quantity):

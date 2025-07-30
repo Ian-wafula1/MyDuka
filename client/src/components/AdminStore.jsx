@@ -15,7 +15,7 @@ export default function AdminStore({ store, setStore }) {
 				setStore((store) => {
 					return {
 						...store,
-						users: store.users.filter((user) => user.id !== this.id && user.account_type === 'clerk'),
+						users: store?.users?.filter((user) => user.id !== this.id && user.account_type === 'clerk'),
 					};
 				});
 				console.log(`Clerk ${this.name} removed`);
@@ -26,17 +26,17 @@ export default function AdminStore({ store, setStore }) {
 	function changeAccountStatus() {
 		axios
 			.patch(`/api/users/clerk/${this.id}`, {
-				account_status: this.account_status === 'active' ? 'inactive' : 'active',
+				account_status: this?.account_status === 'active' ? 'inactive' : 'active',
 			})
 			.then(() => {
 				setStore((store) => {
 					return {
 						...store,
-						users: store.users.map((user) => {
-							if (user.id === this.id) {
+						users: store?.users?.map((user) => {
+							if (user?.id === this?.id) {
 								return {
 									...user,
-									account_status: user.account_status === 'active' ? 'inactive' : 'active',
+									account_status: user?.account_status === 'active' ? 'inactive' : 'active',
 								};
 							}
 							return user;
@@ -50,17 +50,17 @@ export default function AdminStore({ store, setStore }) {
 	function changeEntryStatus() {
 		axios
 			.patch(`/api/entries/${this.id}`, {
-				payment_status: this.payment_status === 'pending' ? 'paid' : 'pending',
+				payment_status: this?.payment_status === 'pending' ? 'paid' : 'pending',
 			})
 			.then(() => {
 				setStore((store) => {
 					return {
 						...store,
-						entries: store.entries.map((entry) => {
-							if (entry.id === this.id) {
+						entries: store?.entries?.map((entry) => {
+							if (entry?.id === this.id) {
 								return {
 									...entry,
-									payment_status: entry.payment_status === 'pending' ? 'paid' : 'pending',
+									payment_status: entry?.payment_status === 'pending' ? 'paid' : 'pending',
 								};
 							}
 							return entry;
@@ -80,8 +80,8 @@ export default function AdminStore({ store, setStore }) {
 				setStore((store) => {
 					return {
 						...store,
-						supply_requests: store.supply_requests.map((request) => {
-							if (request.id === this.id) {
+						supply_requests: store?.supply_requests.map((request) => {
+							if (request?.id === this.id) {
 								return {
 									...request,
 									status: action,
@@ -101,8 +101,8 @@ export default function AdminStore({ store, setStore }) {
 				<h1>Clerks</h1>
 				<div>
 					{store?.users
-						?.filter((user) => user.account_type === 'clerk')
-						.map((clerk) => {
+						?.filter((user) => user?.account_type === 'clerk')
+						?.map((clerk) => {
 							return (
 								<div key={clerk.id}>
 									<p>{clerk.name}</p>
@@ -157,7 +157,7 @@ export default function AdminStore({ store, setStore }) {
 				<div>
 					{store?.entries
 						?.sort((a) => (a.payment_status !== 'pending' ? 1 : -1))
-						.map((entry) => {
+						?.map((entry) => {
 							return (
 								<div key={entry.id}>
 									<p>Product: {store.products.find((product) => product.id === entry.product_id).name}</p>
@@ -176,7 +176,7 @@ export default function AdminStore({ store, setStore }) {
 				<div className="pending">
 					{store?.supply_requests
 						?.filter((request) => request.status === 'pending')
-						.map((request) => {
+						?.map((request) => {
 							return (
 								<div key={request.id}>
 									<p>Product: {store.products.find((product) => product.id === request.product_id).name}</p>
@@ -184,7 +184,7 @@ export default function AdminStore({ store, setStore }) {
 									<p>Date: {request.created_at.split('T').join(', ').split('.')[0]}</p>
 									<p>Status: {request.status}</p>
 									<button onClick={() => handleSupplyRequest.call(request, 'approved')}>Approve</button>
-									<button onClick={() => handleSupplyRequest.call(request, 'denied')}>Deny</button>
+									<button onClick={() => handleSupplyRequest.call(request, 'declined')}>Deny</button>
 								</div>
 							);
 						})}
@@ -192,7 +192,7 @@ export default function AdminStore({ store, setStore }) {
 				<div className="approved">
 					{store?.supply_requests
 						?.filter((request) => request.status === 'approved')
-						.map((request) => {
+						?.map((request) => {
 							return (
 								<div key={request.id}>
 									<p>Product: {store.products.find((product) => product.id === request.product_id).name}</p>
@@ -203,10 +203,10 @@ export default function AdminStore({ store, setStore }) {
 							);
 						})}
 				</div>
-				<div className="denied">
+				<div className="declined">
 					{store?.supply_requests
-						?.filter((request) => request.status === 'denied')
-						.map((request) => {
+						?.filter((request) => request.status === 'declined')
+						?.map((request) => {
 							return (
 								<div key={request.id}>
 									<p>Product: {store.products.find((product) => product.id === request.product_id).name}</p>

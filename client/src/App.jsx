@@ -1,4 +1,4 @@
-import {Outlet } from "react-router-dom"
+import {Outlet, useNavigate } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import { useEffect, useContext } from "react"
 import { AppContext } from "./context/AppContext"
@@ -8,6 +8,7 @@ function App() {
 
     const {setCurrentUser} = useContext(AppContext)
     const token = localStorage.getItem('token')
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (token) {
@@ -28,7 +29,7 @@ function App() {
                 console.log(err)
             })
         }
-    }, [token, setCurrentUser])
+    }, [token, setCurrentUser, navigate])
 
     return (
         <>
