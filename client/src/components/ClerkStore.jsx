@@ -4,7 +4,7 @@ import { MySelect, MyTextInput } from '../utils/formElements';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useState } from 'react';
-import './ClerkStore.css';
+import '../styles/ClerkStore.css';
 
 export default function ClerkStore({ store, setStore }) {
 	const [isOpen, setIsOpen] = useState({
