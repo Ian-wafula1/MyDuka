@@ -9,19 +9,20 @@ import axios from 'axios';
 import '../styles/Store.css';
 
 export default function Store() {
-	const { currentUser, setCurrentUser } = useContext(AppContext);
+	const { currentUser } = useContext(AppContext);
 	const { id } = useParams();
 	const [store, setStore] = useState(null);
 
 	useEffect(() => {
-		axios.get(`/api/stores/${id}`, {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
-			},
-		})
-		.then((res) => setStore(res.data))
-		.catch((err) => console.log(err))	
-	}, [id])
+		axios
+			.get(`/api/stores/${id}`, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
+			})
+			.then((res) => setStore(res.data))
+			.catch((err) => console.log(err));
+	}, [id]);
 
 	return (
 		<div className="store-page">
@@ -34,7 +35,7 @@ export default function Store() {
 					{currentUser?.account_type === 'merchant' ? (
 						<MerchantStore store={store} setStore={setStore} />
 					) : currentUser?.account_type === 'admin' ? (
-						<AdminStore store={store} setStore={setStore} currentUser={currentUser} setCurrentUser={setCurrentUser} />
+						<AdminStore store={store} setStore={setStore} />
 					) : currentUser?.account_type === 'clerk' ? (
 						<ClerkStore store={store} setStore={setStore} />
 					) : null}
