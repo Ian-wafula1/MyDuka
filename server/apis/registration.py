@@ -54,8 +54,17 @@ class Signup(Resource):
                 return make_response({'error': 'Invalid account type'}, 400)
             
             user.password_hash = data.get('password')
-            db.session.add(user)
-            db.session.commit()
+            if account_type == 'admin':
+                id = get_jwt_identity()['store_id']
+                store = Store.query.filter_by(id=id).first()
+                store.users.append(user)
+                user.merchant_id = store.merchant_id
+                db.session.add_all([user, store])
+                db.session.commit()
+                # user.merchant_id = get_jwt_identity()['id']
+            else:
+                db.session.add(user)
+                db.session.commit()
             return make_response({'message': f'{account_type.capitalize()} signed up successfully'}, 201)
         except Exception as e:
             return make_response({'error': str(e)}, 500)

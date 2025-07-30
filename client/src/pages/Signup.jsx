@@ -50,6 +50,10 @@ export default function Signup() {
 							email: values.email,
 							password: values.password,
 							account_type: token ? 'admin' : 'merchant',
+						}, {
+							headers: {
+								Authorization: `Bearer ${token}`
+							}
 						})
 						.then(() => {
 							navigate('/login');
