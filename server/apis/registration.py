@@ -5,13 +5,15 @@ from flask import request, make_response
 from models import User, Merchant, Store
 import datetime, os
 from flask_mail import Message
+from email.mime.text import MIMEText
+import smtplib
 
 reg = Namespace('registration', description='Registration operations', path='/api')
 
 @reg.route('/login')
 class Login(Resource):
     def post(self):
-        # try: 
+        try: 
             data = request.json
             if not data or 'email' not in data or 'password' not in data:
                 return make_response({'error': 'Missing email or password'}, 400)
@@ -37,8 +39,8 @@ class Login(Resource):
                 'account_type': account_type
             }, expires_delta=datetime.timedelta(days=7))
             return {'access_token': access_token, 'user_dict': user.to_dict()}
-        # except Exception as e:
-        #     return make_response({'error': str(e)}, 500)
+        except Exception as e:
+            return make_response({'error': str(e)}, 500)
 
 @reg.route('/signup')
 class Signup(Resource):
@@ -122,14 +124,29 @@ class SendInvite(Resource):
                 'store_id': data['store_id'],
                 'store_name': store.name
             }, expires_delta=datetime.timedelta(hours=2))
-            message = Message(
-                subject="Invitation to join a store",
-                sender="no-reply@myduka.com",
-                recipients=[data['email']],
-                body=f"Hello,\n\nYou have been invited to join {store.name}. Please click the link below to join:\n{os.environ.get('FRONTEND_URL')}/signup/{access_token}\n\nBest regards,\nMyDuka Team"
-            )
+            # message = Message(
+            #     subject="Invitation to join a store",
+            #     sender=os.environ.get('MAIL_USERNAME'),
+            #     recipients=[data['email']],
+            #     body=f"Hello {data['name']} ,\n\nYou have been invited to join {store.name}. Please click the link below to join:\n{os.environ.get('FRONTEND_URL')}/signup/{access_token}\n\nBest regards,\nMyDuka Team"
+            # )
             
-            mail.send(message)
+            msg = MIMEText(f"""
+            Hello {data['name']}, You have been invited to join {store.name}.
+            Please click the link below to join:
+            {os.environ.get('FRONTEND_URL')}/signup/{access_token}
+            
+            Best regards,
+            MyDuka Team
+            """)
+            msg['Subject'] = f'Invitation to join {store.name}'
+            msg['From'] = os.environ.get('MAIL_USERNAME')
+            msg['To'] = data['email']
+
+            with smtplib.SMTP_SSL('smtp.gmail.com', os.getenv('MAIL_PORT')) as server:
+                server.login(os.getenv('MAIL_USERNAME'), os.getenv('MAIL_PASSWORD'))
+                server.sendmail(os.getenv('MAIL_USERNAME'), data['email'], msg.as_string())
+            # mail.send(message)
             return make_response({'message': 'Invitation sent successfully'}, 200)
         except Exception as e:
             return make_response({'error': str(e)}, 500)

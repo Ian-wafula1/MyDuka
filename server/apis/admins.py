@@ -35,29 +35,6 @@ class AdminsByID(Resource):
         except Exception as e:
             return make_response({'error': str(e)}, 500)
         
-@admins.route('/')
-class Admins(Resource):
-    def post(self):
-        try:
-            data = request.json
-            admin = User(
-                name=data['name'],
-                email=data['email'],
-                account_type='admin',
-                account_status='active',
-                merchant_id= data['merchant_id']
-            )
-            
-            admin.password_hash = data['password']
-            store = Store.query.filter_by(id=data['store_id']).first()
-            store.admins.append(admin)
-            
-            db.session.add_all([admin, store])
-            db.session.commit()
-            return make_response(admin.to_dict(), 201)
-        except Exception as e:
-            return make_response({'error': str(e)}, 500)
-        
 @admins.route('/stores')
 class AdminStores(Resource):
     @jwt_required()

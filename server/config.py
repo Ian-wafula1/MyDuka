@@ -35,11 +35,21 @@ app.config['JWT_SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.json.sort_keys = True
 app.json.compact = False
 
-app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
-app.config['MAIL_PORT'] = os.environ.get('MAIL_PORT')
-app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS')
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+# app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
+# app.config['MAIL_PORT'] = os.environ.get('MAIL_PORT')
+# app.config['MAIL_USE_TLS'] = True
+# app.config['MAIL_USE_SSL'] = False
+# app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+# app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+
+# GMAIL_APP_PASSWORD = os.environ.get('GMAIL_APP_PASSWORD')
+    # GMAIL_SMTP_HOST = 'smtp.gmail.com'
+    # GMAIL_SMTP_PORT = 465
+
+app.config['GMAIL_USER'] = os.environ.get('MAIL_USERNAME')
+app.config['GMAIL_APP_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['GMAIL_SMTP_HOST'] = os.environ.get('MAIL_SERVER')
+app.config['GMAIL_SMTP_PORT'] = os.environ.get('MAIL_PORT')
 
 db.init_app(app)
 

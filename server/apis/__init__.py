@@ -8,6 +8,7 @@ from .entries import entries
 from .products import products
 from .supply_requests import supply_requests
 from .transactions import transactions
+from .merchants import merchants
 
 api = Api(app,
           title='MyDuka API',
@@ -23,3 +24,4 @@ api.add_namespace(entries)
 api.add_namespace(products)
 api.add_namespace(supply_requests)
 api.add_namespace(transactions)
+api.add_namespace(merchants)
