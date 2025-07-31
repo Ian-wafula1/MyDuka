@@ -8,7 +8,6 @@ from sqlalchemy import MetaData
 from flask_jwt_extended import  JWTManager
 import os
 from dotenv import load_dotenv
-from flask_mail import Mail
 
 load_dotenv()
 metadata = MetaData()
@@ -57,4 +56,3 @@ jwt = JWTManager(app)
 CORS(app)
 bcrypt = Bcrypt(app)
 migrate = Migrate(app, db)
-mail = Mail(app)

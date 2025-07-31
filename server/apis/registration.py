@@ -1,10 +1,9 @@
 from flask_restx import Namespace, Resource
-from config import jwt, db, mail
+from config import jwt, db
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from flask import request, make_response
 from models import User, Merchant, Store
 import datetime, os
-from flask_mail import Message
 from email.mime.text import MIMEText
 import smtplib
 
