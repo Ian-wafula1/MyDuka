@@ -1,6 +1,6 @@
 import { Formik, Form } from 'formik';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import pic1 from '../assets/pic1.svg';
 import pic2 from '../assets/pic2.svg';
 import * as Yup from 'yup';
@@ -66,6 +66,9 @@ const Login = () => {
 							<button type="submit" disabled={isSubmitting}>
 								Login
 							</button>
+
+							<div>Don't have an account? <Link to="/signup">Sign Up</Link></div>
+							<div>Forgot your password? <Link to="/reset-password">Reset Password</Link></div>
 						</div>
 					</Form>
 				)}

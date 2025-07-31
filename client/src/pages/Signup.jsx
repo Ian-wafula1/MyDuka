@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik';
 import { MyTextInput } from '../utils/formElements';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import pic1 from '../assets/pic1.svg';
@@ -72,6 +72,7 @@ export default function Signup() {
 					<div>
 						{error && <div className="fetch error">{error}</div>}
 						<button type="submit">Submit</button>
+						<div>Already have an account? <Link to="/login">Log In</Link> </div>
 					</div>
 				</Form>
 			</Formik>

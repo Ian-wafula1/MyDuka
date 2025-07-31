@@ -157,7 +157,9 @@ body {
 	right: 0;
 }
 
-/* media queries */
+.form-container form > div:last-child > div:not(.error) {
+	text-align: center;
+}
 
 @media (max-width: 750px) {
 	.form-container img {
