@@ -1,0 +1,504 @@
+
+/* AdminStore.css */
+
+/* Main Container */
+.admin-store-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Card Base Styles */
+.card {
+  background: white;
+  border-radius: 2rem;
+  padding: 3rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  animation: cardSlide 0.8s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 0.4rem;
+  background: linear-gradient(90deg, var(--button-bg), #2ecc71, #e74c3c);
+  transition: left 0.5s ease;
+}
+
+.card:hover::before {
+  left: 0;
+}
+
+.card:hover {
+  transform: translateY(-0.5rem);
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.15);
+}
+
+/* Card Headers */
+.card h1 {
+  font-size: 2.8rem;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Clerks Section */
+.clerks .clerk-item {
+  background: #f8f9fa;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  border-left: 0.4rem solid var(--button-bg);
+  transition: all 0.3s ease;
+  animation: valueSlide 0.8s ease-out;
+}
+
+.clerks .clerk-item:hover {
+  transform: translateX(1rem);
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+}
+
+.clerks .clerk-item p {
+  margin-bottom: 0.8rem;
+  font-size: 1.5rem;
+  color: #2c3e50;
+}
+
+.clerks .clerk-item strong {
+  color: var(--button-bg);
+}
+
+/* Clerk Actions */
+.clerk-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Add Clerk Section */
+.add-clerk-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 1.5rem;
+  border: 2px dashed #dee2e6;
+  transition: all 0.3s ease;
+}
+
+.add-clerk-section:hover {
+  border-color: var(--button-bg);
+  background: #f0f8ff;
+}
+
+.add-clerk-toggle {
+  width: 100%;
+  padding: 1.2rem;
+  background: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.add-clerk-toggle:hover {
+  filter: brightness(0.95);
+  transform: translateY(-0.2rem);
+}
+
+.add-clerk-toggle:active {
+  transform: scale(0.98);
+}
+
+/* Form Styling */
+.clerk-form {
+  animation: slideDown 0.3s ease-out;
+}
+
+.clerk-form .input-box {
+  margin-bottom: 2rem;
+}
+
+.clerk-form input {
+  width: 100%;
+  padding: 1.2rem 1.5rem;
+  border: 2px solid #e9ecef;
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
+}
+
+.clerk-form input:focus {
+  outline: none;
+  border-color: var(--button-bg);
+  box-shadow: 0 0 0 0.3rem rgba(var(--button-bg-rgb), 0.25);
+}
+
+.clerk-form button[type="submit"] {
+  width: 100%;
+  padding: 1.2rem;
+  background: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clerk-form button[type="submit"]:hover {
+  filter: brightness(0.95);
+}
+
+/* Entries Section */
+.entries .entry-item {
+  background: linear-gradient(135deg, #667eea 10%, #764ba2 90%);
+  color: white;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+  animation: featureSlide 0.8s ease-out;
+}
+
+.entries .entry-item:hover {
+  transform: translateY(-0.5rem) scale(1.02);
+  box-shadow: 0 1rem 3rem rgba(102, 126, 234, 0.3);
+}
+
+.entries .entry-item p {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  opacity: 0.9;
+}
+
+.entries .entry-item strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Entry Status Badge */
+.entry-status {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+}
+
+.entry-status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.entry-status.paid {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+/* Supply Requests Section */
+.supply-requests {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.supply-requests h1 {
+  color: white;
+}
+
+.supply-requests .pending,
+.supply-requests .approved,
+.supply-requests .denied {
+  margin-bottom: 2rem;
+}
+
+.supply-requests .section-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  text-align: center;
+}
+
+.supply-requests .request-item {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.supply-requests .request-item:hover {
+  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.supply-requests .request-item p {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+/* Request Actions */
+.request-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Button Styles */
+.btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: var(--button-bg);
+  color: white;
+}
+
+.btn-primary:hover {
+  filter: brightness(0.95);
+  transform: translateY(-0.2rem);
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  transform: translateY(-0.2rem);
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  transform: translateY(-0.2rem);
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+  transform: translateY(-0.2rem);
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  transform: translateY(-0.2rem);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Status Toggle Button */
+.status-toggle {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Empty States */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #6c757d;
+}
+
+.empty-state .icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state p {
+  font-size: 1.4rem;
+  line-height: 1.6;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes featureSlide {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes valueSlide {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .admin-store-container {
+    padding: 1.5rem;
+  }
+  
+  .card {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-store-container {
+    padding: 1rem;
+  }
+  
+  .card {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .card h1 {
+    font-size: 2.4rem;
+  }
+  
+  .clerk-actions,
+  .request-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+  
+  .clerks .clerk-item,
+  .entries .entry-item,
+  .supply-requests .request-item {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .card {
+    padding: 1rem;
+  }
+  
+  .card h1 {
+    font-size: 2rem;
+  }
+  
+  .clerks .clerk-item p,
+  .entries .entry-item p,
+  .supply-requests .request-item p {
+    font-size: 1.3rem;
+  }
+}
+
+/* CSS Variables (add to your root styles) */
+:root {
+  --button-bg: #5127b4;
+  --button-bg-rgb: 81, 39, 180;
+  --button-color: #ffffff;
+}

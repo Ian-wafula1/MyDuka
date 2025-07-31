@@ -4,6 +4,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { MyTextInput } from '../utils/formElements';
 import ProductsCard from './ProductsCard';
+import '../styles/AdminStore.css';
 
 export default function AdminStore({ store, setStore }) {
 	const [isOpen, setIsOpen] = useState(false);

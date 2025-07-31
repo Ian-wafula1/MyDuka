@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import {AppContext} from '../context/AppContext'
+import '../styles/ClerkStore.css';
 
 export default function ClerkStore({ store, setStore }) {
 	const [isOpen, setIsOpen] = useState({
