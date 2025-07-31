@@ -1,7 +1,17 @@
+import { useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import '../styles/about.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function About() {
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		if (!localStorage.getItem('token')) {
+			navigate('/login')
+		}
+	}, [navigate])
+
 	return (
 		<>
 			<Sidebar />

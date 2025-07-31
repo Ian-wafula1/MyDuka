@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import { AppContext } from '../context/AppContext';
 import MerchantStore from '../components/MerchantStore';
@@ -13,6 +13,14 @@ export default function Store() {
 	const { id } = useParams();
 	const [store, setStore] = useState(null);
 
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		if (!localStorage.getItem('token')) {
+			navigate('/login')
+		}
+	}, [navigate])
+
 	useEffect(() => {
 		axios
 			.get(`/api/stores/${id}`, {
@@ -25,9 +33,9 @@ export default function Store() {
 	}, [id]);
 
 	return (
-		<div className="store-page">
+		<>
 			<Sidebar />
-			<div className="store-content">
+			<div className="store-content store-page">
 				<div className="store-header">
 					<h1 className="store-title">{store?.name || 'Store'}</h1>
 				</div>
@@ -41,6 +49,6 @@ export default function Store() {
 					) : null}
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }

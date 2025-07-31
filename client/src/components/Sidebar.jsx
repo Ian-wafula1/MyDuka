@@ -6,12 +6,44 @@ import '../styles/sidebar.css';
 export default function Sidebar() {
 	const { currentUser: user } = useContext(AppContext);
 	const [isOpen, setIsOpen] = useState(false);
+	const [sidebarOpen, setSidebarOpen] = useState(false);
 	// https://ui-avatars.com/api/?name=${user?.name?.at(0)}&format=svg
 	return (
 		<nav className="sidebar">
-			<ul>
+			<div className="sidebar-dropdown">
+				<div>
+					<svg className={"open " + (sidebarOpen ? 'active' : '')} onClick={() => setSidebarOpen(!sidebarOpen)} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+						<g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+						<g id="SVGRepo_iconCarrier">
+							{' '}
+							<path
+								d="M12 17L12 7M12 17L8 13M12 17L16 13M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+								stroke="#ffffff"
+								strokeWidth="1.5"
+								strokeLinecap="round"
+								strokeLinejoin="round"></path>{' '}
+						</g>
+					</svg>
+					<svg className={"close " + (!sidebarOpen ? 'active' : '')} onClick={() => setSidebarOpen(!sidebarOpen)} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+						<g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+						<g id="SVGRepo_iconCarrier">
+							{' '}
+							<path
+								d="M10.0303 8.96965C9.73741 8.67676 9.26253 8.67676 8.96964 8.96965C8.67675 9.26255 8.67675 9.73742 8.96964 10.0303L10.9393 12L8.96966 13.9697C8.67677 14.2625 8.67677 14.7374 8.96966 15.0303C9.26255 15.3232 9.73743 15.3232 10.0303 15.0303L12 13.0607L13.9696 15.0303C14.2625 15.3232 14.7374 15.3232 15.0303 15.0303C15.3232 14.7374 15.3232 14.2625 15.0303 13.9696L13.0606 12L15.0303 10.0303C15.3232 9.73744 15.3232 9.26257 15.0303 8.96968C14.7374 8.67678 14.2625 8.67678 13.9696 8.96968L12 10.9393L10.0303 8.96965Z"
+								fill="#ffffff"></path>{' '}
+							<path
+								fillRule="evenodd"
+								clipRule="evenodd"
+								d="M12 1.25C6.06294 1.25 1.25 6.06294 1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25ZM2.75 12C2.75 6.89137 6.89137 2.75 12 2.75C17.1086 2.75 21.25 6.89137 21.25 12C21.25 17.1086 17.1086 21.25 12 21.25C6.89137 21.25 2.75 17.1086 2.75 12Z"
+								fill="#ffffff"></path>{' '}
+						</g>
+					</svg>
+				</div>
+			</div>
+			<ul  className={'sidebar-list ' + (sidebarOpen ? 'active' : '')}>
 				<li>
-					{/* <DashboardIcon style={{width: '1.5rem', height: '1.5rem', stroke: '#fff'}} /> */}
 					<svg style={{ transform: 'scale(1.2)' }} viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
 						<g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
@@ -53,9 +85,6 @@ export default function Sidebar() {
 					</svg>
 					<NavLink to={`/dashboard`}>Dashboard</NavLink>
 				</li>
-				{/* <li>
-					<NavLink to={`/profile`}>Profile</NavLink>
-				</li> */}
 				<li>
 					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<g id="SVGRepo_bgCarrier" strokeWidth="0"></g>

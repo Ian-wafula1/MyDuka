@@ -277,7 +277,7 @@ export default function ClerkStore({ store, setStore }) {
 								{() => (
 									<Form>
 										<MySelect name="product_name" label="Product Name">
-											{store.products.map((product) => {
+											{store?.products.map((product) => {
 												return (
 													<option key={product.id} value={product.name}>
 														{product.name}

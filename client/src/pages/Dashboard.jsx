@@ -7,8 +7,18 @@ import { MyTextInput } from '../utils/formElements';
 import axios from 'axios';
 import Sidebar from '../components/Sidebar';
 import '../styles/Dashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		if (!localStorage.getItem('token')) {
+			navigate('/login')
+		}
+	}, [navigate])
+
 	const { currentUser, setCurrentUser } = useContext(AppContext);
 	const [selectedPeriod, setSelectedPeriod] = useState('week');
 	const [selectedStore, setSelectedStore] = useState(null);
