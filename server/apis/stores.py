@@ -18,3 +18,19 @@ class StoreByID(Resource):
         except Exception as e:
             return make_response({'error': str(e)}, 500)
         
+@stores.route('/')
+class Stores(Resource):
+    def post(self):
+        try:
+            data = request.json
+            for key in ('name', 'address', 'merchant_id'):
+                if key not in data:
+                    return make_response({'error': f'Missing {key}'}, 400)
+            
+            store = Store(**data)
+            db.session.add(store)
+            db.session.commit()
+            return make_response(store.to_dict(), 201)
+        except Exception as e:
+            return make_response({'error': str(e)}, 500)
+        

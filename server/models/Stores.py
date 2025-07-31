@@ -11,6 +11,9 @@ class Store(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     location = db.Column(db.String(200), nullable=False)
+    phone = db.Column(db.String(20))
+    description = db.Column(db.String(1000))
+    email = db.Column(db.String(50))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
@@ -26,7 +29,6 @@ class Store(db.Model, SerializerMixin):
     transactions = db.relationship('Transaction', back_populates='store')
     
     serialize_rules = ('-merchant', '-products.store', '-supply_requests.store', '-users.stores', '-entries.store', '-transactions.store')
-    # Ok - users
     # Hybrid property to get merchant's name
     @hybrid_property
     def merchant_name(self):

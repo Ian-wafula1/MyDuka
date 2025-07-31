@@ -11,6 +11,10 @@ fake = Faker()
 
 with app.app_context():
     
+    print("seeding...", end="\n\n")
+    
+    print('Deleting old data...')
+    
     Merchant.query.delete()
     Store.query.delete()
     Product.query.delete()
@@ -21,6 +25,8 @@ with app.app_context():
     db.session.execute(sa.text('DELETE FROM user_stores;'))
     
     db.session.commit()
+    
+    print('Creating test accounts...')
     
     test_merchant = Merchant(
         name='test_Merchant',
@@ -47,6 +53,7 @@ with app.app_context():
     db.session.add_all([test_merchant, test_admin, test_clerk])
     db.session.commit()
     
+    print('Creating merchant data...')
     
     for _ in range(10):
         merchant = Merchant(name=fake.name(), email=fake.email())
@@ -54,9 +61,18 @@ with app.app_context():
         db.session.add(merchant)
         db.session.commit()
     
+    
+    print('Creating store data...', end="\n\n")
     for merchant in Merchant.query.all():
         for _ in range(3):
-            store = Store(name=fake.name(), merchant_id=merchant.id, location=fake.address())
+            store = Store(
+                name=fake.name(),
+                merchant_id=merchant.id,
+                location=fake.address(),
+                description=fake.text(),
+                phone=str(fake.phone_number()),
+                email=fake.email()
+            )
             db.session.add(store)
             db.session.commit()
             
@@ -65,6 +81,9 @@ with app.app_context():
     store.users.append(test_clerk)
     db.session.add_all([test_admin, test_clerk])
     db.session.commit()
+    
+    print('''Creating individual store data...
+           go grab some coffee while you wait ''', end="\n\n")
             
     for store in Store.query.all():
         for _ in range(10):
