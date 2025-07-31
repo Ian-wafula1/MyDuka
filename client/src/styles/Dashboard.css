@@ -7,6 +7,9 @@
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   animation: fadeIn 0.8s ease-out;
+  margin-right: 2rem;
+  margin-top: 1rem;
+  border-radius: 1.5rem;
 }
 
 /* Dashboard Header */
