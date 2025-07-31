@@ -57,3 +57,17 @@ class Admins(Resource):
             return make_response(admin.to_dict(), 201)
         except Exception as e:
             return make_response({'error': str(e)}, 500)
+        
+@admins.route('/stores')
+class AdminStores(Resource):
+    @jwt_required()
+    def get(self):
+        try:
+            admin_id = get_jwt_identity()['user_id']
+            admin = User.query.filter_by(id=admin_id, account_type='admin').first()
+            if not admin:
+                return make_response({'error': 'Admin not found'}, 404)
+            stores = [store.to_dict() for store in admin.stores]
+            return make_response({stores}, 200, {'Content-Type': 'application/json'})
+        except Exception as e:
+            return make_response({'error': str(e)}, 500)
