@@ -1,10 +1,9 @@
 from flask_restx import Namespace, Resource
-from config import jwt, db, mail
+from config import jwt, db
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from flask import request, make_response
 from models import User, Merchant, Store
 import datetime, os
-from flask_mail import Message
 from email.mime.text import MIMEText
 import smtplib
 
@@ -155,7 +154,7 @@ class SendInvite(Resource):
 class Me(Resource):
     @jwt_required()
     def get(self):
-        # try:
+        try:
             data = get_jwt_identity()
             if (account_type := data['account_type']) == 'merchant':
                 user = Merchant.query.filter_by(id=data['id']).first()
@@ -169,6 +168,6 @@ class Me(Resource):
             return make_response({
                 'account_type': account_type, 'user_dict': user.to_dict()}, 200)
             
-        # except Exception as e:
-        #     print(e)
-        #     return make_response({'error': str(e)}, 500)
+        except Exception as e:
+            print(e)
+            return make_response({'error': str(e)}, 500)
