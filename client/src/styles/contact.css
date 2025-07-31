@@ -1,0 +1,445 @@
+.contact-container {
+	padding: 2rem;
+	min-height: 100vh;
+	background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	animation: fadeIn 0.8s ease-out;
+    /* margin: 1rem 2rem 0 2rem; */
+    margin: 1rem;
+    border-radius: 2rem;
+}
+
+.contact-content {
+	max-width: 120rem;
+	margin: 0 auto;
+	animation: slideUp 1s ease-out;
+}
+
+/* Header Styles */
+.contact-header {
+	text-align: center;
+	margin-bottom: 4rem;
+	animation: titleSlide 1.2s ease-out;
+}
+
+.contact-title {
+	font-size: 4.8rem;
+	color: #2c3e50;
+	margin-bottom: 1rem;
+	font-weight: 700;
+	background: linear-gradient(45deg, #3498db, #2c3e50);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	animation: textGradient 3s ease-in-out infinite alternate;
+}
+
+.contact-subtitle {
+	font-size: 2rem;
+	color: #7f8c8d;
+	font-weight: 300;
+	margin-top: 1rem;
+}
+
+/* Section Styles */
+.section-card {
+	background: white;
+	border-radius: 1.5rem;
+	padding: 3rem;
+	margin-bottom: 3rem;
+	box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	animation: cardSlide 0.8s ease-out;
+	position: relative;
+	overflow: hidden;
+}
+
+.section-card::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 0.4rem;
+	background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c);
+	transition: left 0.5s ease;
+}
+
+.section-card:hover::before {
+	left: 0;
+}
+
+.section-card:hover {
+	transform: translateY(-0.5rem);
+	box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.15);
+}
+
+.form-card {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: white;
+}
+
+.info-card {
+	background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+	color: white;
+}
+
+/* Card Icons */
+.card-icon {
+	font-size: 4rem;
+	margin-bottom: 1.5rem;
+	display: inline-block;
+}
+
+/* Typography */
+.section-card h2 {
+	font-size: 2.8rem;
+	margin-bottom: 2rem;
+	font-weight: 600;
+	color: #2c3e50;
+}
+
+.form-card h2,
+.info-card h2 {
+	color: white;
+}
+
+.section-card p {
+	font-size: 1.6rem;
+	line-height: 1.8;
+	margin-bottom: 1.5rem;
+	color: #555;
+}
+
+.form-card p,
+.info-card p {
+	color: rgba(255, 255, 255, 0.9);
+}
+
+/* Contact Grid */
+.contact-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 3rem;
+	margin-bottom: 4rem;
+}
+
+/* Form Styles */
+.contact-form {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.form-group label {
+	font-size: 1.4rem;
+	font-weight: 600;
+	color: white;
+}
+
+.form-group input,
+.form-group textarea {
+	padding: 1.5rem;
+	border: none;
+	border-radius: 0.8rem;
+	font-size: 1.4rem;
+	background: rgba(255, 255, 255, 0.1);
+	color: white;
+	backdrop-filter: blur(1rem);
+	border: 0.1rem solid rgba(255, 255, 255, 0.2);
+	transition: all 0.3s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+	outline: none;
+	background: rgba(255, 255, 255, 0.2);
+	border-color: rgba(255, 255, 255, 0.5);
+	transform: scale(1.02);
+}
+
+.form-group textarea {
+	min-height: 12rem;
+	resize: vertical;
+}
+
+.submit-btn {
+	padding: 1.5rem 3rem;
+	background: rgba(255, 255, 255, 0.2);
+	color: white;
+	border: 0.1rem solid rgba(255, 255, 255, 0.3);
+	border-radius: 0.8rem;
+	font-size: 1.6rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	backdrop-filter: blur(1rem);
+}
+
+.submit-btn:hover {
+	background: rgba(255, 255, 255, 0.3);
+	transform: translateY(-0.2rem);
+	box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+}
+
+/* Contact Info Styles */
+.contact-info {
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem;
+}
+
+.info-item {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	padding: 2rem;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 1rem;
+	backdrop-filter: blur(1rem);
+	border: 0.1rem solid rgba(255, 255, 255, 0.2);
+	transition: transform 0.3s ease;
+}
+
+.info-item:hover {
+	transform: scale(1.05);
+}
+
+.info-icon {
+	font-size: 2.5rem;
+	color: white;
+}
+
+.info-text h3 {
+	font-size: 1.8rem;
+	margin-bottom: 0.5rem;
+	color: white;
+}
+
+.info-text p {
+	font-size: 1.4rem;
+	color: rgba(255, 255, 255, 0.9);
+	margin: 0;
+}
+
+/* Office Locations */
+.offices-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+	gap: 2rem;
+	margin-top: 2rem;
+}
+
+.office-card {
+	background: white;
+	padding: 2.5rem;
+	border-radius: 1.5rem;
+	text-align: center;
+	box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	animation: valueSlide 0.8s ease-out;
+}
+
+.office-card:hover {
+	transform: translateY(-1rem) scale(1.02);
+	box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.15);
+}
+
+.office-icon {
+	font-size: 3.5rem;
+	margin-bottom: 1.5rem;
+}
+
+.office-card h3 {
+	font-size: 2rem;
+	color: #2c3e50;
+	margin-bottom: 1rem;
+	font-weight: 600;
+}
+
+.office-card p {
+	font-size: 1.4rem;
+	color: #7f8c8d;
+	line-height: 1.6;
+	margin-bottom: 1rem;
+}
+
+.office-card .office-address {
+	color: #555;
+	font-size: 1.3rem;
+}
+
+/* Social Links */
+.social-section {
+	text-align: center;
+	margin-top: 3rem;
+}
+
+.social-links {
+	display: flex;
+	justify-content: center;
+	gap: 2rem;
+	margin-top: 2rem;
+}
+
+.social-link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 5rem;
+	height: 5rem;
+	background: linear-gradient(45deg, #3498db, #2ecc71);
+	color: white;
+	border-radius: 50%;
+	font-size: 2rem;
+	text-decoration: none;
+	transition: all 0.3s ease;
+}
+
+.social-link:hover {
+	transform: scale(1.1);
+	box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+.social-link:nth-child(2) {
+	animation-delay: 0.5s;
+}
+
+.social-link:nth-child(3) {
+	animation-delay: 1s;
+}
+
+.social-link:nth-child(4) {
+	animation-delay: 1.5s;
+}
+
+/* Animations */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slideUp {
+	from {
+		opacity: 0;
+		transform: translateY(3rem);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes titleSlide {
+	from {
+		opacity: 0;
+		transform: translateY(-2rem);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes textGradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	100% {
+		background-position: 100% 50%;
+	}
+}
+
+@keyframes cardSlide {
+	from {
+		opacity: 0;
+		transform: translateX(-3rem);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes valueSlide {
+	from {
+		opacity: 0;
+		transform: scale(0.8);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes socialFloat {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-1rem);
+	}
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.contact-container {
+		padding: 1rem;
+	}
+
+	.contact-title {
+		font-size: 3.2rem;
+	}
+
+	.contact-subtitle {
+		font-size: 1.6rem;
+	}
+
+	.section-card {
+		padding: 2rem;
+	}
+
+	.contact-grid,
+	.offices-grid {
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	.social-links {
+		flex-wrap: wrap;
+	}
+}
+
+@media (max-width: 1200px) {
+	.contact-grid {
+		grid-template-columns: 1fr;
+	}
+}

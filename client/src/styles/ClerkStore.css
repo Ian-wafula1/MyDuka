@@ -13,7 +13,7 @@
 }
 
 /* Card Base Styles */
-.card {
+.clerk-store-container .card {
   background: white;
   border-radius: 2rem;
   padding: 3rem;
@@ -25,7 +25,7 @@
   overflow: hidden;
 }
 
-.card::before {
+.clerk-store-container .card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -36,17 +36,17 @@
   transition: left 0.5s ease;
 }
 
-.card:hover::before {
+.clerk-store-container .card:hover::before {
   left: 0;
 }
 
-.card:hover {
+.clerk-store-container .card:hover {
   transform: translateY(-0.5rem);
   box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.15);
 }
 
 /* Card Headers */
-.card h1 {
+.clerk-store-container .card h1 {
   font-size: 2.8rem;
   color: #2c3e50;
   margin-bottom: 2rem;
@@ -57,24 +57,24 @@
 }
 
 /* Products Card Specific */
-.products {
+.clerk-store-container .products {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
-.products h1 {
+.clerk-store-container .products h1 {
   color: white;
 }
 
 /* Search Section */
-.search {
+.clerk-store-container .search {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
   align-items: center;
 }
 
-.search input {
+.clerk-store-container .search input {
   flex: 1;
   padding: 1.2rem 1.5rem;
   border: 2px solid rgba(255, 255, 255, 0.3);
@@ -84,18 +84,18 @@
   transition: all 0.3s ease;
 }
 
-.search input:focus {
+.clerk-store-container .search input:focus {
   outline: none;
   border-color: rgba(255, 255, 255, 0.8);
   background: white;
   box-shadow: 0 0 0 0.3rem rgba(255, 255, 255, 0.25);
 }
 
-.search input::placeholder {
+.clerk-store-container .search input::placeholder {
   color: #666;
 }
 
-.search button {
+.clerk-store-container .search button {
   padding: 1.2rem 2rem;
   background: rgba(255, 255, 255, 0.2);
   color: white;
@@ -108,20 +108,20 @@
   backdrop-filter: blur(10px);
 }
 
-.search button:hover {
+.clerk-store-container .search button:hover {
   background: rgba(255, 255, 255, 0.3);
   border-color: rgba(255, 255, 255, 0.5);
 }
 
 /* Product Items */
-.product-grid {
+.clerk-store-container .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
   margin-bottom: 2rem;
 }
 
-.product-item {
+.clerk-store-container .product-item {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 1.5rem;
   padding: 2rem;
@@ -131,32 +131,32 @@
   animation: featureSlide 0.8s ease-out;
 }
 
-.product-item:hover {
+.clerk-store-container .product-item:hover {
   transform: scale(1.05);
   background: rgba(255, 255, 255, 0.25);
 }
 
-.product-item p {
+.clerk-store-container .product-item p {
   margin-bottom: 0.8rem;
   font-size: 1.4rem;
   color: rgba(255, 255, 255, 0.9);
 }
 
-.product-item strong {
+.clerk-store-container .product-item strong {
   color: white;
 }
 
 /* Entries Card */
-.entries {
+.clerk-store-container .entries {
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   color: white;
 }
 
-.entries h1 {
+.clerk-store-container .entries h1 {
   color: white;
 }
 
-.entry-item {
+.clerk-store-container .entry-item {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 1.5rem;
   padding: 2rem;
@@ -167,32 +167,32 @@
   animation: valueSlide 0.8s ease-out;
 }
 
-.entry-item:hover {
+.clerk-store-container .entry-item:hover {
   transform: translateX(1rem);
   background: rgba(255, 255, 255, 0.25);
 }
 
-.entry-item p {
+.clerk-store-container .entry-item p {
   margin-bottom: 0.8rem;
   font-size: 1.4rem;
   color: rgba(255, 255, 255, 0.9);
 }
 
-.entry-item strong {
+.clerk-store-container .entry-item strong {
   color: white;
 }
 
 /* Supply Requests Card */
-.supply-requests {
+.clerk-store-container .supply-requests {
   background: linear-gradient(135deg, #8884d8 0%, #82ca9d 100%);
   color: white;
 }
 
-.supply-requests h1 {
+.clerk-store-container .supply-requests h1 {
   color: white;
 }
 
-.request-item {
+.clerk-store-container .request-item {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 1.5rem;
   padding: 2rem;
@@ -203,32 +203,32 @@
   animation: featureSlide 0.8s ease-out;
 }
 
-.request-item:hover {
+.clerk-store-container .request-item:hover {
   transform: scale(1.02);
   background: rgba(255, 255, 255, 0.25);
 }
 
-.request-item p {
+.clerk-store-container .request-item p {
   margin-bottom: 1rem;
   font-size: 1.4rem;
   color: rgba(255, 255, 255, 0.9);
 }
 
-.request-item strong {
+.clerk-store-container .request-item strong {
   color: white;
 }
 
 /* Transactions Card */
-.transactions {
+.clerk-store-container .transactions {
   background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
   color: #2c3e50;
 }
 
-.transactions h1 {
+.clerk-store-container .transactions h1 {
   color: #2c3e50;
 }
 
-.transaction-item {
+.clerk-store-container .transaction-item {
   background: rgba(255, 255, 255, 0.7);
   border-radius: 1.5rem;
   padding: 2rem;
@@ -238,24 +238,24 @@
   animation: valueSlide 0.8s ease-out;
 }
 
-.transaction-item:hover {
+.clerk-store-container .transaction-item:hover {
   transform: translateY(-0.5rem);
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
 }
 
-.transaction-item p {
+.clerk-store-container .transaction-item p {
   margin-bottom: 0.8rem;
   font-size: 1.4rem;
   color: #2c3e50;
 }
 
-.transaction-item strong {
+.clerk-store-container .transaction-item strong {
   color: var(--button-bg);
 }
 
 /* Toggle Buttons */
-.toggle-button {
+.clerk-store-container .toggle-button {
   width: 100%;
   padding: 1.2rem;
   background: rgba(255, 255, 255, 0.2);
@@ -270,18 +270,18 @@
   backdrop-filter: blur(10px);
 }
 
-.toggle-button:hover {
+.clerk-store-container .toggle-button:hover {
   background: rgba(255, 255, 255, 0.3);
   border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-0.2rem);
 }
 
-.toggle-button:active {
+.clerk-store-container .toggle-button:active {
   transform: scale(0.98);
 }
 
 /* Form Sections */
-.form-section {
+.clerk-store-container .form-section {
   margin-top: 2rem;
   padding: 2rem;
   background: rgba(255, 255, 255, 0.1);
@@ -291,8 +291,8 @@
   animation: slideDown 0.3s ease-out;
 }
 
-.form-section input,
-.form-section select {
+.clerk-store-container .form-section input,
+.clerk-store-container .form-section select {
   width: 100%;
   padding: 1.2rem 1.5rem;
   border: 2px solid rgba(255, 255, 255, 0.3);
@@ -303,15 +303,15 @@
   transition: all 0.3s ease;
 }
 
-.form-section input:focus,
-.form-section select:focus {
+.clerk-store-container .form-section input:focus,
+.clerk-store-container .form-section select:focus {
   outline: none;
   border-color: rgba(255, 255, 255, 0.8);
   background: white;
   box-shadow: 0 0 0 0.3rem rgba(255, 255, 255, 0.25);
 }
 
-.form-section button[type="submit"] {
+.clerk-store-container .form-section button[type="submit"] {
   width: 100%;
   padding: 1.2rem;
   background: rgba(255, 255, 255, 0.2);
@@ -325,13 +325,13 @@
   backdrop-filter: blur(10px);
 }
 
-.form-section button[type="submit"]:hover {
+.clerk-store-container .form-section button[type="submit"]:hover {
   background: rgba(255, 255, 255, 0.3);
   border-color: rgba(255, 255, 255, 0.5);
 }
 
 /* Total Sum Display */
-.total_sum {
+.clerk-store-container .total_sum {
   background: rgba(255, 255, 255, 0.2);
   padding: 1rem 1.5rem;
   border-radius: 0.8rem;
@@ -343,14 +343,14 @@
   backdrop-filter: blur(10px);
 }
 
-.total_sum span {
+.clerk-store-container .total_sum span {
   color: #fff;
   font-size: 1.8rem;
   margin-left: 0.5rem;
 }
 
 /* Status Badges */
-.status {
+.clerk-store-container .status {
   display: inline-block;
   padding: 0.4rem 1rem;
   border-radius: 2rem;
@@ -360,46 +360,46 @@
   margin-left: 0.5rem;
 }
 
-.status.pending {
+.clerk-store-container .status.pending {
   background: rgba(255, 243, 205, 0.9);
   color: #856404;
 }
 
-.status.paid {
+.clerk-store-container .status.paid {
   background: rgba(209, 236, 241, 0.9);
   color: #0c5460;
 }
 
-.status.approved {
+.clerk-store-container .status.approved {
   background: rgba(212, 237, 218, 0.9);
   color: #155724;
 }
 
-.status.denied {
+.clerk-store-container .status.denied {
   background: rgba(248, 215, 218, 0.9);
   color: #721c24;
 }
 
 /* Empty States */
-.empty-state {
+.clerk-store-container .empty-state {
   text-align: center;
   padding: 4rem 2rem;
   color: rgba(255, 255, 255, 0.7);
 }
 
-.empty-state .icon {
+.clerk-store-container .empty-state .icon {
   font-size: 4rem;
   margin-bottom: 1rem;
   opacity: 0.5;
 }
 
-.empty-state h3 {
+.clerk-store-container .empty-state h3 {
   font-size: 2rem;
   margin-bottom: 1rem;
   color: white;
 }
 
-.empty-state p {
+.clerk-store-container .empty-state p {
   font-size: 1.4rem;
   line-height: 1.6;
 }

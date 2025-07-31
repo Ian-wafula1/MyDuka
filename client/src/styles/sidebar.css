@@ -1,5 +1,6 @@
 .sidebar {
 	margin: 1rem;
+    /* z-index: -100; */
 	background-color: var(--button-bg);
 	position: sticky;
 	top: 2rem;
@@ -130,5 +131,9 @@
 
     .sidebar-list:not(.active) {
         display: none;
+    }
+
+    .sidebar {
+        position: relative;
     }
 }
