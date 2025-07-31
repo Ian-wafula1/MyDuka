@@ -7,12 +7,11 @@ import axios from 'axios';
 import '../styles/MerchantStore.css';
 
 export default function MerchantStore({ store, setStore }) {
-	console.log(store);
 	const [isOpen, setIsOpen] = useState({
 		admins: false,
 		reports: false,
 	});
-	const [loading, setLoading] = useState(false);
+	const [loading, ] = useState(false);
 	const [error, setError] = useState('');
 
 	// Helper function to format currency
@@ -74,7 +73,6 @@ export default function MerchantStore({ store, setStore }) {
 	const inviteValidationSchema = Yup.object({
 		name: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
 		email: Yup.string().email('Invalid email address').required('Required'),
-		password: Yup.string().min(8, 'Must be 8 characters or more').required('Required'),
 	});
 
 	if (loading && !store) {
@@ -186,21 +184,21 @@ export default function MerchantStore({ store, setStore }) {
 							}}
 							validationSchema={inviteValidationSchema}
 							onSubmit={(values, { setSubmitting, resetForm }) => {
+								console.log('reached')
 								axios
-									.post('/api/admin', {
+									.post('/api/send-invite', {
 										name: values.name,
 										email: values.email,
-										password: values.password,
-										account_type: values.account_type,
 										store_id: store.id,
 										merchant_id: store.merchant_id,
+									}, {
+										headers: {
+											Authorization: `Bearer ${localStorage.getItem('token')}`
+										}
 									})
-									.then((res) => {
+									.then(() => {
+										alert('Admin invited successfully!');
 										setIsOpen((prev) => ({ ...prev, admins: false }));
-										setStore((store) => ({
-											...store,
-											users: [...store.users, res.data],
-										}));
 										resetForm();
 									})
 									.catch((err) => {
@@ -212,7 +210,6 @@ export default function MerchantStore({ store, setStore }) {
 							<Form>
 								<MyTextInput label="Name" name="name" type="text" />
 								<MyTextInput label="Email" name="email" type="email" />
-								<MyTextInput label="Password" name="password" type="password" />
 								<button type="submit" className="btn btn-primary">
 									Invite Admin
 								</button>
