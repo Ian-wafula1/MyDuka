@@ -55,19 +55,19 @@ const Dashboard = () => {
         setIsLoading(true);
         setError(null);
         const token = localStorage.getItem('token');
-        const response = await axios.get('/api/merchants/stores', {
+        const response = await axios.get(`/api/${currentUser?.account_type}s/stores`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        if (response.data.stores && Array.isArray(response.data.stores)) {
+        if (response?.data?.stores && Array.isArray(response?.data?.stores)) {
           setCurrentUser((prevUser) => ({
             ...prevUser,
-            stores: response.data.stores,
+            stores: response?.data?.stores,
           }));
-          if (response.data.stores.length > 0 && !selectedStore) {
-            setSelectedStore(response.data.stores[0]);
+          if (response?.data?.stores.length > 0 && !selectedStore) {
+            setSelectedStore(response?.data?.stores[0]);
           }
         } else {
           throw new Error('Invalid stores data format');
@@ -92,7 +92,7 @@ const Dashboard = () => {
         setError(null);
         const token = localStorage.getItem('token');
         const [salesResponse, transactionsResponse] = await Promise.all([
-          axios.get(`/api/stores/${selectedStore.id}/sales?period=${selectedPeriod}`, {
+          axios.get(`/api/stores/${selectedStore.id}/sales`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
           axios.get(`/api/stores/${selectedStore.id}/transactions`, {
@@ -102,30 +102,30 @@ const Dashboard = () => {
 
         const calculateDashboardData = (sales, transactions, store) => {
           // Calculate total revenue
-          const totalRevenue = store.total_revenue || 0;
+          const totalRevenue = store?.total_revenue || 0;
 
           // Calculate monthly growth
-          const currentSales = sales.currentPeriod.reduce((sum, item) => sum + (item.revenue || 0), 0);
-          const previousSales = sales.previousPeriod
-            ? sales.previousPeriod.reduce((sum, item) => sum + (item.revenue || 0), 0)
+          const currentSales = sales?.currentPeriod?.reduce((sum, item) => sum + (item.revenue || 0), 0);
+          const previousSales = sales?.previousPeriod
+            ? sales?.previousPeriod?.reduce((sum, item) => sum + (item.revenue || 0), 0)
             : currentSales;
           const monthlyGrowth = previousSales
             ? ((currentSales - previousSales) / previousSales) * 100
             : 0;
 
           // Calculate total products and low stock items
-          const totalProducts = store.total_products || store.products?.length || 0;
-          const lowStockItems = store.products?.filter((p) => p.quantity_in_stock < 10).length || 0;
+          const totalProducts = store?.total_products || store.products?.length || 0;
+          const lowStockItems = store?.products?.filter((p) => p.quantity_in_stock < 10).length || 0;
 
           // Format sales data for chart
-          const salesData = sales.currentPeriod.map((item) => ({
+          const salesData = sales?.currentPeriod?.map((item) => ({
             name: item.day,
             sales: item.sales || 0,
             revenue: item.revenue || 0,
           }));
 
           // Format recent transactions
-          const recentTransactions = transactions.slice(0, 5).map((t) => ({
+          const recentTransactions = transactions?.slice(0, 5)?.map((t) => ({
             id: t.id,
             product: t.product_name || 'Unknown Product',
             customer: 'Anonymous', // No customer_name in Transaction model
@@ -135,13 +135,13 @@ const Dashboard = () => {
           }));
 
           // Calculate performance metrics
-          const totalOrders = transactions.length;
+          const totalOrders = transactions?.length;
           const performanceMetrics = {
             averageOrderValue: totalOrders ? totalRevenue / totalOrders : 0,
-            conversionRate: totalOrders ? (totalOrders / (store.visits || 1000)) * 100 : 0, // Default visits to 1000
-            customerSatisfaction: store.satisfaction_rating || 4.0, // Default to 4.0
-            returnRate: transactions.filter((t) => t.status === 'cancelled').length
-              ? (transactions.filter((t) => t.status === 'cancelled').length / totalOrders) * 100
+            conversionRate: totalOrders ? (totalOrders / (store?.visits || 1000)) * 100 : 0, // Default visits to 1000
+            customerSatisfaction: store?.satisfaction_rating || 4.0, // Default to 4.0
+            returnRate: transactions.filter((t) => t?.status === 'cancelled').length
+              ? (transactions.filter((t) => t?.status === 'cancelled').length / totalOrders) * 100
               : 0,
           };
 
@@ -157,8 +157,8 @@ const Dashboard = () => {
         };
 
         const newDashboardData = calculateDashboardData(
-          salesResponse.data,
-          transactionsResponse.data,
+          salesResponse?.data,
+          transactionsResponse?.data,
           selectedStore
         );
 
@@ -217,7 +217,7 @@ const Dashboard = () => {
       if (response.data) {
         setCurrentUser((prevUser) => ({
           ...prevUser,
-          stores: [...(prevUser.stores || []), response.data],
+          stores: [...(prevUser?.stores || []), response?.data],
         }));
         setShowCreateStoreModal(false);
         resetForm();
@@ -227,7 +227,7 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Error creating store:', error);
       if (error.response?.data?.error) {
-        const errorMsg = error.response.data.error;
+        const errorMsg = error?.response?.data?.error;
         if (errorMsg.includes('Missing')) {
           const field = errorMsg.match(/Missing (\w+)/)?.[1];
           if (field) setFieldError(field, errorMsg);
@@ -338,14 +338,14 @@ const Dashboard = () => {
             <h2>
               <span className="icon">📦</span> Total Products
             </h2>
-            <p className="value">{dashboardData.totalProducts}</p>
+            <p className="value">{dashboardData?.totalProducts}</p>
             <p>Active inventory</p>
           </div>
           <div className="metric-card orders">
             <h2>
               <span className="icon">🛒</span> Recent Orders
             </h2>
-            <p className="value">{dashboardData.recentTransactions.length}</p>
+            <p className="value">{dashboardData?.recentTransactions.length}</p>
             <p className="success">+15% this week</p>
           </div>
           <div className="metric-card alerts">
