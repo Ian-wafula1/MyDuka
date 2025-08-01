@@ -18,6 +18,20 @@ class StoreByID(Resource):
         except Exception as e:
             return make_response({'error': str(e)}, 500)
         
+@stores.route('/<int:id>/transactions')
+class StoreTransactions(Resource):
+    def get(self, id):
+        try:
+            store = Store.query.filter_by(id=id).first()
+            if not store:
+                return make_response({'error': 'Store not found'}, 404)
+            transactions = [transaction.to_dict() for transaction in store.transactions]
+            return make_response(transactions, 200)
+        except Exception as e:
+            return make_response({'error': str(e)}, 500)
+        
+@stores.route('/<int:id>/products')
+        
 @stores.route('/')
 class Stores(Resource):
     def post(self):

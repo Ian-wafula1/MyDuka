@@ -1,11 +1,22 @@
 from config import db, app
 from models import *
 from faker import Faker
-from datetime import datetime
+from datetime import datetime, timedelta
 import random
 import sqlalchemy as sa
 
 fake = Faker()
+
+def random_datetime_within_3_months(start_date=None):
+
+    if start_date is None:
+        start_date = datetime.now()
+
+    # Define the range as 90 days
+    max_range = timedelta(days=90)
+    random_offset = timedelta(seconds=random.randint(0, int(max_range.total_seconds())))
+
+    return start_date + random_offset
 
 # admins, clerks, merchants, stores - merchant, products
 
@@ -15,13 +26,13 @@ with app.app_context():
     
     print('Deleting old data...')
     
-    Merchant.query.delete()
-    Store.query.delete()
-    Product.query.delete()
     Entry.query.delete()
     SupplyRequest.query.delete()
     Transaction.query.delete()
+    Product.query.delete()
+    Store.query.delete()
     User.query.delete()
+    Merchant.query.delete()
     db.session.execute(sa.text('DELETE FROM user_stores;'))
     
     db.session.commit()
@@ -69,8 +80,8 @@ with app.app_context():
                 name=fake.name(),
                 merchant_id=merchant.id,
                 location=fake.address(),
-                description=fake.text(),
-                phone=str(fake.phone_number()),
+                description=fake.text(max_nb_chars=95),
+                phone=str('0' + str(random.randrange(100000000, 999999999))),
                 email=fake.email()
             )
             db.session.add(store)
@@ -93,7 +104,8 @@ with app.app_context():
                 quantity_in_stock=random.randrange(4, 10),
                 quantity_spoilt=random.randrange(1,3),
                 buying_price=random.randrange(5, 20),
-                selling_price=random.randrange(10, 25)
+                selling_price=random.randrange(10, 25),
+                created_at=random_datetime_within_3_months(),
             )
             db.session.add(product)
             db.session.commit()
@@ -105,6 +117,7 @@ with app.app_context():
                 payment_status=random.choice(['pending', 'paid']),
                 total_sum=random.randrange(30, 100),
                 store_id=store.id,
+                created_at=random_datetime_within_3_months(),
             )
             db.session.add(entry)
             db.session.commit()
@@ -140,7 +153,8 @@ with app.app_context():
                 product_id=random.choice(store.products).id,
                 store_id=store.id,
                 status=random.choice(['pending', 'approved', 'declined']),
-                user_id=random.choice([x.id for x in store.users if x.account_type == 'clerk'])
+                user_id=random.choice([x.id for x in store.users if x.account_type == 'clerk']),
+                created_at=random_datetime_within_3_months(),
             )
             db.session.add(supply_request)
             db.session.commit()
@@ -151,6 +165,7 @@ with app.app_context():
                 product_id=random.choice(store.products).id,
                 store_id=store.id,
                 unit_price=random.randrange(1, 20),
+                created_at=random_datetime_within_3_months(),
             )
             db.session.add(transaction)
             db.session.commit()

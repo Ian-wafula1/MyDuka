@@ -164,7 +164,7 @@ class Me(Resource):
                 return make_response({'error': 'Invalid account type'}, 400)
             
             # stores = [store.to_dict() for store in user.stores]
-            
+            print(user)
             return make_response({
                 'account_type': account_type, 'user_dict': user.to_dict()}, 200)
             

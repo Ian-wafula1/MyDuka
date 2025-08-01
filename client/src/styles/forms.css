@@ -8,7 +8,7 @@ body {
     min-height: 110vh;
 }
 
-.container:has(.form-container) {
+.container:has( > .form-container) {
 	display: grid;
 	place-items: center;
 }
@@ -162,23 +162,23 @@ body {
 }
 
 @media (max-width: 750px) {
-	.form-container img {
+	.container > .form-container img {
 		display: none;
 		/* width: 0; */
 	}
 
-	.form-container {
+	.container > .form-container {
 		margin: auto;
 		width: 90%;
 		padding: 2rem 4rem;
 		gap: 0rem;
 	}
 
-	.form-container > form {
+	.container > .form-container > form {
 		margin: 0;
 	}
 
-	.form-container > h1 {
+	.container > .form-container > h1 {
 		text-align: center;
 	}
 }

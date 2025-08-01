@@ -45,6 +45,6 @@ class AdminStores(Resource):
             if not admin:
                 return make_response({'error': 'Admin not found'}, 404)
             stores = [store.to_dict() for store in admin.stores]
-            return make_response({stores}, 200, {'Content-Type': 'application/json'})
+            return make_response({'stores': stores}, 200, {'Content-Type': 'application/json'})
         except Exception as e:
             return make_response({'error': str(e)}, 500)

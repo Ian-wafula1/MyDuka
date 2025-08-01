@@ -11,7 +11,7 @@ class Store(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     location = db.Column(db.String(200), nullable=False)
-    phone = db.Column(db.String(20))
+    phone = db.Column(db.String())
     description = db.Column(db.String(1000))
     email = db.Column(db.String(50))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

@@ -73,3 +73,18 @@ class Clerks(Resource):
             return make_response(clerk.to_dict(), 201)
         except Exception as e:
             return make_response({'error': str(e)}, 500)
+        
+@clerks.route('/stores')
+class ClerkStores(Resource):
+    @jwt_required()
+    def get(self):
+        try:
+            clerk_id = get_jwt_identity()['user_id']
+            clerk = Merchant.query.filter_by(id=clerk_id).first()
+            if not clerk:
+                return make_response({'error': 'Clerk not found'}, 404)
+            stores = [store.to_dict() for store in clerk.stores]
+            return make_response({'stores': stores}, 200, {'Content-Type': 'application/json'})
+        
+        except Exception as e:
+            return make_response({'error': str(e)}, 500)
